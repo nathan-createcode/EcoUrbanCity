@@ -1,15 +1,17 @@
-// Mock Transport Map Data
-document.addEventListener("DOMContentLoaded", function () {
-  const map = document.getElementById("map");
-  map.innerHTML = "<p>Loading real-time transport data...</p>";
-  setTimeout(() => {
-    map.innerHTML = "<p>Real-time map of transport routes will appear here.</p>";
-  }, 2000);
+document.addEventListener('DOMContentLoaded', function() {
+  const hero = document.querySelector('.hero');
 
-  // Mock Air Quality Data
-  const airQuality = document.getElementById("airQuality");
-  airQuality.innerHTML = "<p>Loading air quality data...</p>";
-  setTimeout(() => {
-    airQuality.innerHTML = "<p>Current Air Quality Index (AQI): Good (45)</p>";
-  }, 2000);
+  // Add click event listener to the hero section
+  hero.addEventListener('click', function(e) {
+      // Create a marker at click position
+      const marker = document.createElement('div');
+      marker.style.position = 'absolute';
+      marker.style.left = (e.offsetX - 5) + 'px';
+      marker.style.top = (e.offsetY - 5) + 'px';
+      marker.style.width = '10px';
+      marker.style.height = '10px';
+      marker.style.borderRadius = '50%';
+      marker.style.backgroundColor = '#e31b23';
+      hero.appendChild(marker);
+  });
 });
