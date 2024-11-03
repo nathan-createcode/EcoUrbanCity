@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Nation</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <header>
@@ -15,29 +15,41 @@
             <a href="#">Apps</a>
             <a href="#">News</a>
             <a href="#">Resources</a>
-            <a href="#" class="search-btn">Search</a>
+            <a href="#" class="search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fcfcfc" viewBox="0 0 256 256"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"></path></svg>
+            </a>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>MANY SMART IDEAS, ONE SMART NATION</h1>
+            <h1>MANY SMART IDEAS,<br>ONE SMART NATION</h1>
             <p>Click on the spots to see how we translate these into reality</p>
         </div>
-        <img src="/placeholder.svg?height=600&width=1200" alt="Smart City Illustration" class="hero-image">
+        <!-- <img src="/img/freepik__just-add-the-blank-white-space__79832.png" alt="Smart City Illustration" class="hero-image"> -->
     </section>
 
     <section class="smart-nation">
-        <div>
+        <div class="smart-nation-content">
             <h2>SMART NATION</h2>
             <p>Singapore strives to be a nation where people are empowered by technology to lead meaningful and fulfilled lives.</p>
             <p>By harnessing the power of networks, data and info-comm technologies, we seek to improve living, create economic opportunity and build a closer community.</p>
+            <button class="download-btn">Download Smart Nation PDF</button>
         </div>
         <div class="video-placeholder"></div>
     </section>
 
     <section class="initiatives">
         <h2>SMART INITIATIVES</h2>
+        <div class="categories">
+            <button class="category-btn active">All</button>
+            <button class="category-btn">Business</button>
+            <button class="category-btn">Education</button>
+            <button class="category-btn">Health</button>
+            <button class="category-btn">Home</button>
+            <button class="category-btn">Lifestyle</button>
+            <button class="category-btn">Mobility</button>
+        </div>
         <div class="initiatives-grid">
             <div class="initiative-card">
                 <img src="/placeholder.svg?height=200&width=300" alt="Mobility">
@@ -48,14 +60,15 @@
                 <h3>Beeline</h3>
             </div>
             <div class="initiative-card">
+                <img src="/placeholder.svg?height=200&width=300" alt="SG Next Bus">
+                <h3>SG Next Bus</h3>
+            </div>
+            <div class="initiative-card">
                 <img src="/placeholder.svg?height=200&width=300" alt="Future Transport">
                 <h3>Future Transport</h3>
             </div>
-            <div class="initiative-card">
-                <img src="/placeholder.svg?height=200&width=300" alt="Fly Easier">
-                <h3>Fly Easier</h3>
-            </div>
         </div>
+        <button class="see-more-btn">See More</button>
     </section>
 
     <section class="popular-apps">
@@ -67,7 +80,7 @@
             </div>
             <div class="app-card">
                 <img src="/placeholder.svg?height=80&width=80" alt="Singapore City Guide">
-                <h3>Singapore City Guide</h3>
+                <h3>Singapore City Guide - Citybot</h3>
             </div>
             <div class="app-card">
                 <img src="/placeholder.svg?height=80&width=80" alt="Dash Singapore">
@@ -78,18 +91,21 @@
                 <h3>SG Secondary School Guide</h3>
             </div>
         </div>
+        <button class="see-more-btn">See More</button>
     </section>
 
     <footer>
-        <p>&copy; 2024 Smart Nation. All rights reserved.</p>
-        <div class="social-links">
-            <a href="#">Facebook</a>
-            <a href="#">Twitter</a>
-            <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a>
+        <div class="footer-content">
+            <p>&copy; 2024 Smart Nation. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><img src="/placeholder.svg?height=24&width=24" alt="Facebook"></a>
+                <a href="#"><img src="/placeholder.svg?height=24&width=24" alt="Twitter"></a>
+                <a href="#"><img src="/placeholder.svg?height=24&width=24" alt="Instagram"></a>
+                <a href="#"><img src="/placeholder.svg?height=24&width=24" alt="LinkedIn"></a>
+            </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
