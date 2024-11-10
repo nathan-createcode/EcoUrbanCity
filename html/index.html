@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart City Website</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <span>Smart City</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Beranda</a>
+                    <div class="dropdown">
+                        <a href="#" class="nav-link">Layanan</a>
+                        <div class="dropdown-content">
+                            <a href="#">Monitoring Lalu Lintas</a>
+                            <a href="#">Kualitas Udara</a>
+                            <a href="#">Laporan Infrastruktur</a>
+                            <a href="#">Notifikasi Darurat</a>
+                            <a href="#">Event Sosial</a>
+                            <a href="#">Forum Komunitas</a>
+                            <a href="#">Statistik Kota</a>
+                            <a href="#">Informasi Sampah</a>
+                        </div>
+                    </div>
+                    <a href="#" class="nav-link">Tentang</a>
+                    <a href="#" class="nav-link">Kontak</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="tagline">I AM LIVING POSITIVE EVERY DAY</div>
+                <h1 class="hero-title">BEST CITY<br>IN THE WORLD</h1>
+                <a href="#" class="cta-button">Discover More</a>
+            </div>
+        </section>
+
+        <main class="dashboard">
+            <h2>Dashboard Kota</h2>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-green">
+                            <i data-feather="activity"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Monitoring Lalu Lintas</h3>
+                            <div class="status status-warning">Kepadatan Sedang</div>
+                            <p>Rata-rata kecepatan: 40 km/jam</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-blue">
+                            <i data-feather="wind"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Kualitas Udara</h3>
+                            <div class="status status-normal">Baik</div>
+                            <p>AQI: 52 - Sehat untuk aktivitas luar ruang</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-yellow">
+                            <i data-feather="file-text"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Laporan Infrastruktur</h3>
+                            <p>3 laporan baru</p>
+                            <a href="#" class="card-link">Lihat semua laporan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-red">
+                            <i data-feather="alert-triangle"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Notifikasi Darurat</h3>
+                            <div class="status status-normal">Tidak ada kejadian darurat</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-purple">
+                            <i data-feather="calendar"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Event Sosial</h3>
+                            <p>2 event minggu ini</p>
+                            <a href="#" class="card-link">Lihat kalender event</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-indigo">
+                            <i data-feather="message-square"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Forum Komunitas</h3>
+                            <p>15 diskusi aktif</p>
+                            <a href="#" class="card-link">Bergabung dengan forum</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-pink">
+                            <i data-feather="bar-chart-2"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Statistik Kota</h3>
+                            <p>Populasi: 2.5 juta jiwa</p>
+                            <p>Pertumbuhan: 2.3%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-icon bg-gray">
+                            <i data-feather="trash-2"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Informasi Sampah</h3>
+                            <div class="status status-normal">85% tempat sampah tersedia</div>
+                            <p>Jadwal pengambilan: Senin & Kamis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <section class="report-section">
+            <div class="container">
+                <h2>Laporkan Masalah Infrastruktur</h2>
+                <form id="reportForm" class="report-form">
+                    <div class="form-group">
+                        <label for="category">Kategori</label>
+                        <select id="category" name="category" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="jalan">Jalan</option>
+                            <option value="ruang-hijau">Ruang Hijau</option>
+                            <option value="taman">Taman</option>
+                            <option value="fasilitas-umum">Fasilitas Umum</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Deskripsi Masalah</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Jelaskan masalah yang Anda temui..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Kirim Laporan</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tentang Smart City</h3>
+                    <p>Inisiatif untuk menciptakan kota yang lebih cerdas, berkelanjutan, dan nyaman bagi seluruh warga.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="#">Monitoring Lalu Lintas</a></li>
+                        <li><a href="#">Kualitas Udara</a></li>
+                        <li><a href="#">Laporan Infrastruktur</a></li>
+                        <li><a href="#">Event Sosial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li>Email: info@smartcity.id</li>
+                        <li>Telepon: (021) 1234-5678</li>
+                        <li>Alamat: Jl. Smart City No. 1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Smart City. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
