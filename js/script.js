@@ -37,8 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (reportForm) {
         reportForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            // Here you would typically send the form data to a server
-            // For this example, we'll just show an alert
             alert('Laporan berhasil dikirim!');
             this.reset();
         });
@@ -53,4 +51,63 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+    // Navbar functionality
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navLinks = document.querySelector('.nav-links');
+    const dropdowns = document.querySelectorAll('.dropdown');
+    const navItems = document.querySelectorAll('.nav-link');
+
+    // Toggle hamburger menu
+    hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    // Dropdown functionality
+    dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('.dropdown-toggle');
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.innerWidth <= 768) {
+                this.parentNode.classList.toggle('active');
+            } else {
+                // Tutup dropdown lain saat membuka yang baru
+                dropdowns.forEach(d => {
+                    if (d !== this.parentNode) d.classList.remove('active');
+                });
+                this.parentNode.classList.toggle('active');
+            }
+        });
+    });
+
+    // Tutup dropdown saat mengklik di luar area dropdown
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+        }
+    });
+
+    // Set status aktif untuk item navbar
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            if (!this.classList.contains('dropdown-toggle')) {
+                e.preventDefault();
+                navItems.forEach(navItem => navItem.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Set status aktif awal berdasarkan halaman saat ini
+    function setInitialActiveState() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        navItems.forEach(item => {
+            if (item.getAttribute('data-page') === currentPage.replace('.html', '')) {
+                item.classList.add('active');
+            }
+        });
+    }
+
+    setInitialActiveState();
 });

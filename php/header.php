@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Nation</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Smart City Website</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body>
-    <header>
-        <img src="/placeholder.svg?height=40&width=150" alt="Smart Nation Logo" class="logo">
-        <?php include 'navbar.php'; ?>
-    </header>
