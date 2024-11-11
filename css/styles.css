@@ -29,6 +29,8 @@ body {
   padding: 0 1rem;
 }
 
+
+
 /* Navbar */
 /* Navbar Styles */
 .navbar {
@@ -207,6 +209,7 @@ body {
   }
 
 
+
 /* Hero Section */
 .hero {
   position: relative;
@@ -274,6 +277,8 @@ body {
 .cta-button:hover {
   background-color: #c41230;
 }
+
+
 
 /* Dashboard */
 .dashboard {
@@ -369,6 +374,8 @@ body {
   font-weight: 500;
 }
 
+
+
 /* Report Section */
 .report-section {
   background-color: var(--background);
@@ -417,6 +424,8 @@ body {
   padding-left: 322.5px;
   margin-bottom: 45px;
 }
+
+
 
 /* Footer */
 footer {
@@ -502,6 +511,8 @@ footer {
       gap: 1rem;
   }
 }
+
+
 
 /* Background colors for card icons */
 .bg-green { background-color: var(--success); }
