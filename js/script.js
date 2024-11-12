@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // fungstion untuk ngirim hasil submit pelaporan ke sheet
-// URL Apps Script untuk Google Sheets dan Google Drive
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyQM5M8eACB5BfPQ9KORpDcd2Xrw1GsVEoHowdXgaqN5gAh7NXwYlHlNHRBonMwNvR2/exec'
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxFk8CyfgbFGvTgVpqMf6CB45w8ZlvQpsv3ihYZE6wsDrvvGd9dsER2eVsSLYBukDbO/exec'
 const form = document.forms['pelaporan-masalah-infrastruktur']
 
 form.addEventListener('submit', e => {
@@ -122,5 +121,4 @@ form.addEventListener('submit', e => {
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => console.log('Success!', response))
         .catch(error => console.error('Error!', error.message))
-    });
-
+});
