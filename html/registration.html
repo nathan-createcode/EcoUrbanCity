@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoUrbanCity Registration</title>
+    <link rel="stylesheet" href="/css/registration.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Bagian Kiri - Background & Welcome Text -->
+        <div class="left-section">
+            <h1>Welcome to<br>EcoUrbanCity!</h1>
+        </div>
+
+        <!-- Bagian Kanan - Form -->
+        <div class="right-section">
+            <div class="form-container">
+                <!-- Progress Steps -->
+                <div class="progress-steps">
+                    <div class="step completed" data-step="1">
+                        <span class="step-number"></span>
+                        <span class="step-text">Step 1</span>
+                    </div>
+                    <div class="step active" data-step="2">
+                        <span class="step-number"></span>
+                        <span class="step-text">Step 2</span>
+                    </div>
+                    <div class="step" data-step="3">
+                        <span class="step-number"></span>
+                        <span class="step-text">Step 3</span>
+                    </div>
+                </div>
+
+                <!-- Form Steps -->
+                <form id="registrationForm" action="registration.php" method="POST">
+                    <!-- Step 1: Profil Pengguna -->
+                    <div class="form-step active" id="step1">
+                        <div class="form-group">
+                            <label for="firstName">Nama Depan<span class="required">*</span></label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Nama Belakang<span class="required">*</span></label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Alamat Email<span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Kata Sandi<span class="required">*</span></label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Konfirmasi Kata Sandi<span class="required">*</span></label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Informasi Alamat -->
+                    <div class="form-step" id="step2">
+                        <div class="form-group">
+                            <label for="street">Alamat Jalan<span class="required">*</span></label>
+                            <input type="text" id="street" name="street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Kota<span class="required">*</span></label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postalCode">Kode Pos<span class="required">*</span></label>
+                            <input type="text" id="postalCode" name="postalCode" required>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Informasi Tambahan -->
+                    <div class="form-step" id="step3">
+                        <div class="form-group">
+                            <label for="occupation">Alasan Pindah</label>
+                            <input type="text" id="occupation" name="occupation">
+                        </div>
+                        <div class="form-group">
+                            <label for="purpose">Tujuan <span class="required">*</span></label>
+                            <select id="purpose" name="purpose" required>
+                                <option value="">Pilih tujuan</option>
+                                <option value="work">Bekerja</option>
+                                <option value="study">Belajar</option>
+                                <option value="business">Bisnis</option>
+                            </select>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="agreement" name="agreement" required>
+                            <label for="agreement">Saya menyetujui syarat dan ketentuan Smart City<span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-navigation">
+                        <button type="button" class="btn-prev" id="prevBtn">Sebelumnya</button>
+                        <button type="button" class="btn-next" id="nextBtn">Selanjutnya</button>
+                        <button type="submit" class="btn-submit hidden" id="submitBtn">Daftar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/registration.js"></script>
+</body>
+</html>
