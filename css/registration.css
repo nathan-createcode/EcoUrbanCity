@@ -1,0 +1,417 @@
+/* Reset dan Variabel */
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #ff4b6e;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --error-color: #dc2626;
+    --success-color: #16a34a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    height: 100vh; /* Changed from min-height to fixed height */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Left Section Styling */
+.left-section {
+    flex: 1;
+    height: 100%; /* Changed from min-height to match parent */
+    background-image: url('/background_img/reg-flat-geometric-abstact-background_23-2149447626.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem; /* Reduced padding */
+}
+
+.geometric-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.c1 {
+    width: 200px;
+    height: 200px;
+    background: rgba(99, 102, 241, 0.1);
+    top: 20%;
+    left: 20%;
+}
+
+.c2 {
+    width: 150px;
+    height: 150px;
+    border: 2px solid var(--secondary-color);
+    bottom: 30%;
+    right: 25%;
+}
+
+.zigzag {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, transparent 49%, var(--primary-color) 49%, var(--primary-color) 51%, transparent 51%);
+    background-size: 20px 20px;
+    top: 40%;
+    right: 20%;
+}
+
+.square {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.s1 {
+    background-color: var(--secondary-color);
+    top: 25%;
+    right: 35%;
+    transform: rotate(45deg);
+}
+
+.s2 {
+    border: 2px solid var(--primary-color);
+    bottom: 20%;
+    left: 30%;
+}
+
+.left-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-color);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+}
+
+/* Right Section Styling */
+.right-section {
+    flex: 1;
+    height: 100%;
+    padding: 1.5rem; /* Reduced padding */
+    overflow-y: auto; /* Allow scrolling only in form section if needed */
+}
+
+.form-container {
+    width: 100%;
+    max-width: 450px; /* Reduced from 500px */
+    margin: 0 auto;
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    background: white;
+    padding: 0.75rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    height: 40px;
+    padding: 0 1.5rem;
+    background: white;
+    transition: all 0.3s ease;
+    clip-path: polygon(85% 0, 100% 50%, 85% 100%, 0% 100%, 15% 50%, 0% 0%);
+    z-index: 1;
+}
+
+.step:first-child {
+    clip-path: polygon(85% 0, 100% 50%, 85% 100%, 0% 100%, 0% 50%, 0% 0%);
+    padding-left: 1rem;
+}
+
+.step:last-child {
+    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 15% 50%, 0% 0%);
+    padding-right: 1rem;
+}
+
+.step.active {
+    background: #6366f1;
+    z-index: 2;
+}
+
+.step.completed {
+    background: #818cf8;
+    z-index: 1;
+}
+
+.step-number {
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-right: 0.75rem;
+    color: #6b7280;
+    transition: color 0.3s ease;
+}
+
+.step.active .step-number,
+.step.active .step-text {
+    color: white;
+}
+
+.step.completed .step-number,
+.step.completed .step-text {
+    color: white;
+}
+
+.step-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+/* Add hover effect */
+.step:not(.active):not(.completed):hover {
+    background: #f3f4f6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .progress-steps {
+        padding: 0.5rem;
+    }
+
+    .step {
+        padding: 0 1rem;
+        height: 36px;
+    }
+
+    .step-number {
+        font-size: 0.75rem;
+        margin-right: 0.5rem;
+    }
+
+    .step-text {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-steps {
+        padding: 0.375rem;
+    }
+
+    .step {
+        padding: 0 0.75rem;
+        height: 32px;
+        justify-content: center;
+    }
+
+    .step-text {
+        display: none;
+    }
+
+    .step-number {
+        margin-right: 0;
+    }
+}
+
+/* Form Styling */
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.required {
+    color: var(--error-color);
+    margin-left: 0.25rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.625rem; /* Reduced from 0.75rem */
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+/* Navigation Buttons */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-prev {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: var(--text-color);
+}
+
+.btn-next, .btn-submit {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+}
+
+.btn-prev:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-next:hover, .btn-submit:hover {
+    background-color: #4f46e5;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        height: 100vh;
+        padding: 0; /* Remove container padding */
+    }
+    
+    .left-section {
+        flex: 0.7; /* Reduce left section width on smaller screens */
+    }
+    
+    .left-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .form-container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        display: flex; /* Show on mobile but smaller */
+        height: 200px;
+    }
+
+    .right-section {
+        padding: 1rem;
+    }
+
+    .progress-steps {
+        margin-bottom: 1.5rem;
+    }
+
+    .step-text {
+        display: none;
+    }
+    
+    .form-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-step {
+        padding: 1rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    input, select {
+        font-size: 0.875rem;
+    }
+    
+    .btn-prev, .btn-next, .btn-submit {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
