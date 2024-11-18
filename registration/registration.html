@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoUrbanCity Registration</title>
-    <link rel="stylesheet" href="/css/registration.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EcoUrbanCity Registration</title>
+        <link rel="stylesheet" href="registration.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    </head>
 <body>
     <div class="container">
         <!-- Bagian Kiri - Background & Welcome Text -->
         <div class="left-section">
             <h1>Welcome to<br>EcoUrbanCity!</h1>
+
         </div>
 
         <!-- Bagian Kanan - Form -->
@@ -18,22 +20,22 @@
             <div class="form-container">
                 <!-- Progress Steps -->
                 <div class="progress-steps">
-                    <div class="step completed" data-step="1">
-                        <span class="step-number"></span>
-                        <span class="step-text">Step 1</span>
+                    <div class="step active" data-step="1">
+                        <span class="step-number">1</span>
+                        <span class="step-text">Personal Information</span>
                     </div>
                     <div class="step active" data-step="2">
-                        <span class="step-number"></span>
-                        <span class="step-text">Step 2</span>
+                        <span class="step-number">2</span>
+                        <span class="step-text">Address</span>
                     </div>
                     <div class="step" data-step="3">
-                        <span class="step-number"></span>
-                        <span class="step-text">Step 3</span>
+                        <span class="step-number">3</span>
+                        <span class="step-text">Reason and Agreement</span>
                     </div>
                 </div>
 
                 <!-- Form Steps -->
-                <form id="registrationForm" action="registration.php" method="POST">
+                <form id="registrationForm" action="/ecourbancity/registration/registration.php" method="POST">
                     <!-- Step 1: Profil Pengguna -->
                     <div class="form-step active" id="step1">
                         <div class="form-group">
@@ -65,13 +67,19 @@
                     <!-- Step 2: Informasi Alamat -->
                     <div class="form-step" id="step2">
                         <div class="form-group">
-                            <label for="street">Alamat Jalan<span class="required">*</span></label>
-                            <input type="text" id="street" name="street" required>
+                            <label for="street">Area Jalan<span class="required">*</span></label>
+                            <select id="street" name="street" required>
+                                <option value="">Area jalan</option>
+                                <option value="Utara">Utara</option>
+                                <option value="Selatan">Selatan</option>
+                                <option value="Timur">Timur</option>
+                                <option value="Barat">Barat</option>
+                            </select>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="city">Kota<span class="required">*</span></label>
                             <input type="text" id="city" name="city" required>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label for="postalCode">Kode Pos<span class="required">*</span></label>
                             <input type="text" id="postalCode" name="postalCode" required>
@@ -85,7 +93,7 @@
                             <input type="text" id="occupation" name="occupation">
                         </div>
                         <div class="form-group">
-                            <label for="purpose">Tujuan <span class="required">*</span></label>
+                            <label for="purpose">Tujuan<span class="required">*</span></label>
                             <select id="purpose" name="purpose" required>
                                 <option value="">Pilih tujuan</option>
                                 <option value="work">Bekerja</option>
@@ -101,14 +109,14 @@
 
                     <!-- Navigation Buttons -->
                     <div class="form-navigation">
-                        <button type="button" class="btn-prev" id="prevBtn">Sebelumnya</button>
-                        <button type="button" class="btn-next" id="nextBtn">Selanjutnya</button>
-                        <button type="submit" class="btn-submit hidden" id="submitBtn">Daftar</button>
+                        <button type="button" class="btn-prev" id="prevBtn" aria-label="Kembali ke langkah sebelumnya">Sebelumnya</button>
+                        <button type="button" class="btn-next" id="nextBtn" aria-label="Lanjut ke langkah berikutnya">Selanjutnya</button>
+                        <button type="submit" class="btn-submit hidden" id="submitBtn" aria-label="Kirim formulir pendaftaran">Daftar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script src="/js/registration.js"></script>
+    <script src="registration.js"></script>
 </body>
 </html>
