@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
+    const emailInput = document.getElementById('email');
 
     let currentStep = 0;
 
@@ -22,55 +23,59 @@ document.addEventListener('DOMContentLoaded', function () {
     nextBtn.addEventListener('click', handleNext);
     form.addEventListener('submit', handleSubmit);
 
-    function handlePrev() {
-        if (currentStep > 0) {
-            currentStep--;
-            showStep(currentStep);
+    // Tambahkan event listener untuk memvalidasi email saat kehilangan fokus dan saat mengetik
+    emailInput.addEventListener('blur', async function () {
+        const errorMessage = await validateInput(emailInput);
+        if (errorMessage) {
+            showError(emailInput, errorMessage);
+        } else {
+            removeError(emailInput);
         }
-    }
+    });
 
-    function handleNext() {
-        if (validateStep(currentStep)) {
+    emailInput.addEventListener('input', async function () {
+        const errorMessage = await validateInput(emailInput);
+        if (errorMessage) {
+            showError(emailInput, errorMessage);
+        } else {
+            removeError(emailInput);
+        }
+    });
+
+    // **Validasi Email secara otomatis setelah input pertama kali dimasukkan**
+    emailInput.addEventListener('change', async function () {
+        const errorMessage = await validateInput(emailInput);
+        if (errorMessage) {
+            showError(emailInput, errorMessage);
+        } else {
+            removeError(emailInput);
+        }
+    });
+
+    // Pastikan validasi dilakukan jika halaman dimuat dan email sudah diisi
+    (async () => {
+        if (emailInput.value.trim()) { // hanya lakukan validasi jika kolom email sudah terisi
+            const errorMessage = await validateInput(emailInput);
+            if (errorMessage) {
+                showError(emailInput, errorMessage);
+            } else {
+                removeError(emailInput);
+            }
+        }
+    })();
+
+    async function handleNext() {
+        const isValid = await validateStep(currentStep);
+        if (isValid) {
             currentStep++;
             showStep(currentStep);
         }
     }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        if (validateStep(currentStep)) {
-            const formData = new FormData(form);
-            try {
-                console.log('Sending data to registration.php');
-
-                const response = await fetchWithTimeout('/ecourbancity/registration/registration.php', {
-                    method: 'POST',
-                    body: formData
-                }, 10000);
-
-                console.log('Response Status:', response.status);
-
-                const textResponse = await response.text();
-                console.log('Server Response:', textResponse);
-
-                if (response.headers.get('Content-Type')?.includes('application/json')) {
-                    const result = JSON.parse(textResponse);
-                    if (result.status === 'success') {
-                        alert('Pendaftaran berhasil!');
-                        form.reset();
-                        currentStep = 0;
-                        showStep(currentStep);
-                    } else {
-                        alert(`Kesalahan: ${result.message}`);
-                    }
-                } else {
-                    console.error('Respons non-JSON:', textResponse);
-                    alert('Respons server tidak valid: ' + textResponse);
-                }
-            } catch (error) {
-                console.error('Fetch Error:', error);
-                alert('Terjadi masalah koneksi atau server tidak merespons. Silakan coba lagi nanti.');
-            }
+    function handlePrev() {
+        if (currentStep > 0) {
+            currentStep--;
+            showStep(currentStep);
         }
     }
 
@@ -88,31 +93,38 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.style.display = step === steps.length - 1 ? 'block' : 'none';
     }
 
-    function validateStep(step) {
+    async function validateStep(step) {
         const currentStepElement = steps[step];
         const inputs = currentStepElement.querySelectorAll('input[required], select[required]');
         let isValid = true;
 
-        inputs.forEach(input => {
-            const errorMessage = validateInput(input);
+        for (const input of inputs) {
+            const errorMessage = await validateInput(input);
             if (errorMessage) {
                 isValid = false;
                 showError(input, errorMessage);
             } else {
                 removeError(input);
             }
-        });
+        }
 
         return isValid;
     }
 
-    function validateInput(input) {
+    async function validateInput(input) {
         const value = input.value.trim();
+
         if (!value) return 'Field ini wajib diisi';
 
         if (input.type === 'email') {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(value)) return 'Format email tidak valid';
+
+            // Memeriksa ketersediaan email
+            const emailError = await checkEmailAvailability(value);
+            if (emailError) {
+                return emailError;  // Jika email sudah terdaftar, kembalikan pesan error
+            }
         }
 
         if (input.id === 'password') {
@@ -124,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (value !== password) return 'Password tidak cocok';
         }
 
-        return null;
+        return null; // Tidak ada error, kembalikan null
     }
 
     function showError(input, message) {
@@ -147,5 +159,59 @@ document.addEventListener('DOMContentLoaded', function () {
         const errorDiv = formGroup.querySelector('.error-message');
         if (errorDiv) errorDiv.remove();
         input.style.borderColor = '';
+    }
+
+    async function checkEmailAvailability(email) {
+        try {
+            const response = await fetchWithTimeout('registration.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ check_email: true, email })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                if (!result.available) {
+                    return 'Email yang Anda masukkan sudah digunakan';  // Tampilkan pesan error langsung
+                }
+            }
+        } catch (error) {
+            console.error('Error checking email:', error);
+        }
+        return null;  // Jika email tersedia, kembalikan null
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const isValid = await validateStep(currentStep);
+
+        if (isValid) {
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetchWithTimeout('registration.php', {
+                    method: 'POST',
+                    body: formData
+                }, 10000);
+
+                const textResponse = await response.text();
+
+                if (response.headers.get('Content-Type')?.includes('application/json')) {
+                    const result = JSON.parse(textResponse);
+                    if (result.status === 'success') {
+                        alert('Pendaftaran berhasil!');
+                        form.reset();
+                        currentStep = 0;
+                        showStep(currentStep);
+                    } else {
+                        alert(result.message);
+                    }
+                } else {
+                    alert('Respons server tidak valid: ' + textResponse);
+                }
+            } catch (error) {
+                alert('Terjadi masalah koneksi atau server tidak merespons. Silakan coba lagi nanti.');
+            }
+        }
     }
 });
