@@ -1,7 +1,51 @@
 <?php
 header('Content-Type: application/json');
 
+// Cek apakah metode permintaan adalah POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validasi email saat event blur
+    if (isset($_POST['check_email'])) {
+        $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+        if (!$email) {
+            echo json_encode(['available' => false, 'message' => 'Format email tidak valid.']);
+            exit;
+        }
+
+        // Koneksi ke database
+        $conn = new mysqli("localhost", "root", "", "ecourbancity");
+        if ($conn->connect_error) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => 'Koneksi ke database gagal: ' . $conn->connect_error]);
+            exit;
+        }
+
+        // Periksa apakah email sudah digunakan
+        $emailCheckQuery = "SELECT id FROM users WHERE email = ?";
+        $stmt = $conn->prepare($emailCheckQuery);
+        if (!$stmt) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => 'Kesalahan SQL: ' . $conn->error]);
+            $conn->close();
+            exit;
+        }
+
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            echo json_encode(['available' => false, 'message' => 'Email sudah terdaftar. Silakan gunakan email lain.']);
+        } else {
+            echo json_encode(['available' => true, 'message' => 'Email tersedia.']);
+        }
+
+
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+
+    // Ambil data dari input pengguna
     $firstName = htmlspecialchars(trim($_POST['firstName'] ?? ''));
     $lastName = htmlspecialchars(trim($_POST['lastName'] ?? ''));
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
@@ -16,15 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validasi server-side
     $errors = [];
-    if (!$firstName) $errors[] = 'Nama Depan wajib diisi.';
-    if (!$lastName) $errors[] = 'Nama Belakang wajib diisi.';
-    if (!$email) $errors[] = 'Email tidak valid.';
-    if (!$password || strlen($password) < 8) $errors[] = 'Password minimal 8 karakter.';
-    if ($password !== $confirmPassword) $errors[] = 'Password dan Konfirmasi Password tidak cocok.';
-    if (!$street) $errors[] = 'Area Jalan wajib diisi.';
-    if (!$postalCode) $errors[] = 'Kode Pos wajib diisi.';
-    if (!$purpose) $errors[] = 'Tujuan wajib dipilih.';
-    if (!$agreement) $errors[] = 'Anda harus menyetujui syarat dan ketentuan.';
+    if (!$firstName) $errors[] = ['field' => 'firstName', 'message' => 'Nama Depan wajib diisi.'];
+    if (!$lastName) $errors[] = ['field' => 'lastName', 'message' => 'Nama Belakang wajib diisi.'];
+    if (!$email) $errors[] = ['field' => 'email', 'message' => 'Email tidak valid.'];
+    if (!$password || strlen($password) < 8) $errors[] = ['field' => 'password', 'message' => 'Password minimal 8 karakter.'];
+    if ($password !== $confirmPassword) $errors[] = ['field' => 'confirmPassword', 'message' => 'Password dan Konfirmasi Password tidak cocok.'];
+    if (!$street) $errors[] = ['field' => 'street', 'message' => 'Area Jalan wajib diisi.'];
+    if (!$postalCode) $errors[] = ['field' => 'postalCode', 'message' => 'Kode Pos wajib diisi.'];
+    if (!$purpose) $errors[] = ['field' => 'purpose', 'message' => 'Tujuan wajib dipilih.'];
+    if (!$agreement) $errors[] = ['field' => 'agreement', 'message' => 'Anda harus menyetujui syarat dan ketentuan.'];
 
     // Jika ada error, kirimkan kembali ke front-end
     if (!empty($errors)) {
@@ -45,14 +89,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Menyimpan data ke database
-    $stmt = $conn->prepare("
+    $insertQuery = "
         INSERT INTO users 
         (firstName, lastName, email, phone, password, street, postalCode, occupation, purpose, agreement) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
+    ";
+    $stmt = $conn->prepare($insertQuery);
     if (!$stmt) {
         http_response_code(500);
         echo json_encode(['status' => 'error', 'message' => 'Kesalahan SQL: ' . $conn->error]);
+        $conn->close();
         exit;
     }
 
@@ -85,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Method Not Allowed']);
 }
 
+// Menampilkan error untuk debugging (dapat dimatikan pada production)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);

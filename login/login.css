@@ -1,0 +1,184 @@
+:root {
+    --primary-color: #6366f1;
+    --text-color: #333333;
+    --border-color: #e5e7eb;
+    --placeholder-color: #9ca3af;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Left Section */
+.left-section {
+    flex: 1;
+    background-image: url('../background_img/log-flat-geometric-abstact-background_23-2149447624.png'); /* Ganti dengan path gambar Anda */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.welcome-text {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    max-width: 80%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Section */
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #ffffff;
+}
+.login-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 2rem;
+    background-color: var(--card-background);
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem 3rem;
+}
+
+.form-header {
+    margin-bottom: 2.5rem;
+}
+
+.form-header h2 {
+    font-size: 1.75rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #000000;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background-color: #ffffff;
+}
+
+.form-group input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-group i {
+    position: absolute;
+    left: 1rem;
+    top: 2.5rem;
+    color: var(--placeholder-color);
+    font-size: 1rem;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: #4f46e5;
+}
+
+@media (max-width: 1024px) {
+    .login-form {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        height: 240px;
+    }
+
+    .welcome-text {
+        font-size: 2rem;
+    }
+
+    .right-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .login-form {
+        padding: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-section {
+        height: 200px;
+    }
+
+    .welcome-text {
+        font-size: 1.75rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .right-section {
+        padding: 1.5rem 1rem;
+    }
+}
