@@ -77,6 +77,66 @@ body {
   color: white;
 }
 
+/* Profile styles */
+/* Profile styles */
+.nav-profile {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary);
+  background-image: url('/img/user_blue_profile.jpg');
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .nav-content {
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    background-color: white;
+    flex-direction: column;
+    padding: 1rem 0;
+    display: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  /* Mengubah posisi profile dan hamburger menu */
+  .nav-profile {
+    order: 2; /* Mengatur urutan tampilan */
+    margin-right: 1rem; /* Jarak dari hamburger menu */
+    margin-left: auto; /* Mendorong ke kanan */
+  }
+
+  .hamburger-menu {
+    order: 3; /* Memastikan hamburger menu berada paling kanan */
+    display: block;
+  }
+
+  .logo {
+    order: 1; /* Memastikan logo tetap di kiri */
+  }
+}
+/* Existing styles for dropdown, hamburger menu, etc. should be kept */
+
 /* Dropdown styles */
 .dropdown {
   position: relative;
