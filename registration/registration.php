@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 
 // Cek apakah metode permintaan adalah POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validasi email saat event blur
+    // **Menambahkan pengecekan email saat event blur** (pengecekan email terdaftar)
     if (isset($_POST['check_email'])) {
         $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
         if (!$email) {
@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['available' => true, 'message' => 'Email tersedia.']);
         }
 
-
         $stmt->close();
         $conn->close();
         exit;
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $purpose = htmlspecialchars(trim($_POST['purpose'] ?? ''));
     $agreement = isset($_POST['agreement']) ? 1 : 0;
 
-    // Validasi server-side
+    // **Validasi server-side** untuk memastikan data yang dimasukkan valid
     $errors = [];
     if (!$firstName) $errors[] = ['field' => 'firstName', 'message' => 'Nama Depan wajib diisi.'];
     if (!$lastName) $errors[] = ['field' => 'lastName', 'message' => 'Nama Belakang wajib diisi.'];
@@ -77,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Enkripsi password
+    // **Enkripsi password** untuk keamanan
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Koneksi ke database
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Menyimpan data ke database
+    // **Menyimpan data ke database** setelah validasi berhasil
     $insertQuery = "
         INSERT INTO users 
         (firstName, lastName, email, phone, password, street, postalCode, occupation, purpose, agreement) 
