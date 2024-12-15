@@ -109,7 +109,7 @@ body {
 .form-group i {
     position: absolute;
     left: 0.75rem; /* Adjusted left position */
-    top: 25%; /* Center vertically */
+    top: 70%; /* Center vertically */
     transform: translateY(-50%); /* Perfect vertical centering */
     color: #6b7280; /* Adjusted color to match design */
     font-size: 1rem;
