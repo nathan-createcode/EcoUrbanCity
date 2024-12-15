@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../background_img/log_adgov_flat-geometric-background_23-2148945958.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 850px;
+  height: 530px;
+  background: linear-gradient(145deg, #1E2355, #293080);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 40px;
+  background: rgba(41, 48, 128, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+}
+
+.welcome-text {
+  font-size: 2.5em;
+  color: #fff;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.greeting-text {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  position: relative;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: #fff;
+  color: #293080;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
