@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - EcoUrbanCity</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
@@ -15,31 +16,38 @@
 
         <div class="right-section">
             <div class="login-card">
-            <form class="login-form" id="loginForm" method="POST" action="login.php">
-                <div class="form-header">
-                    <h2>Selamat datang kembali</h2>
-                    <p>Your gateway to a smarter, greener city life awaits.</p>
-                </div>
-                <!-- <div class="form-group">
-                    <label for="name">Nama</label>
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="name" name="name" required placeholder="Masukkan nama Anda">
-                </div> -->
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <i class="fas fa-key"></i>
-                    <input type="password" id="password" name="password" required placeholder="Masukkan password Anda">
-                </div>
-                <div class="form-group account-link">
-                    <p>Are You New here? <a href="../registration/registration.html" class="signup-link">Registration</a></p>
-                </div>
-                <button type="submit" class="submit-btn">Masuk</button>
-            </form>
+                <form class="login-form" id="loginForm" method="POST" action="login.php" autocomplete="off">
+                    <div class="form-header">
+                        <h2>Selamat Datang Kembali</h2>
+                        <p>Your gateway to a smarter, greener city life awaits.</p>
+                    </div>
+
+                    <!-- Input Email -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required
+                              placeholder="contoh@email.com" aria-label="Masukkan email Anda">
+                    </div>
+
+                    <!-- Input Password -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="password" name="password" required minlength="6"
+                              placeholder="Masukkan minimal 6 karakter" aria-label="Masukkan password Anda">
+                    </div>
+
+                    <!-- Link Registrasi -->
+                    <div class="form-group account-link">
+                        <p>Belum punya akun?
+                           <a href="../registration/registration.html" class="signup-link">Registrasi di sini</a>
+                        </p>
+                    </div>
+
+                    <!-- Tombol Submit -->
+                    <button type="submit" class="submit-btn">Masuk</button>
+                </form>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const trafficStatus = document.querySelector('.card:nth-child(1) .status');
         const trafficStates = ['normal', 'warning', 'danger'];
         const trafficMessages = ['Lancar', 'Kepadatan Sedang', 'Padat'];
-        
+
         setInterval(() => {
             const randomIndex = Math.floor(Math.random() * 3);
             if (trafficStatus) {
@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add smooth scrolling to all links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
