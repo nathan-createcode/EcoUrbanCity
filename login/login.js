@@ -2,34 +2,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const loginForm = document.getElementById('loginForm');
 
   if (loginForm) {
-      // Tangkap event submit
       loginForm.addEventListener('submit', function (e) {
-          e.preventDefault();
+          e.preventDefault(); // Mencegah submit default form
 
-          // Ambil nilai input email dan password
-          const email = document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value.trim();
+          const emailInput = document.getElementById('email');
+          const passwordInput = document.getElementById('password');
 
-          // Validasi input kosong
-          if (email === '' || password === '') {
-              alert('Email dan Password harus diisi!');
-              return;
-          }
+          const email = emailInput.value.trim();
+          const password = passwordInput.value.trim();
 
-          // Kirim data ke server
+          // Kirim data ke server dengan fetch
           fetch('login.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
               body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
           })
-          .then(response => response.text())
+          .then(response => response.text()) // Respons dari server
           .then(data => {
-              console.log('Response dari server:', data);
-
-              // Redirect ke dashboard jika login sukses
-              if (data.includes('success')) {
-                  window.location.href = 'dashboard.html';
+              if (data === 'success') {
+                  // Redirect ke dashboard jika login berhasil
+                  window.location.href = '../dashboard/dashboard.php';
               } else {
+                  // Tampilkan alert jika login gagal
                   alert('Login gagal. Periksa email atau password Anda.');
               }
           })
@@ -38,5 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
               alert('Terjadi kesalahan. Coba lagi nanti.');
           });
       });
+  } else {
+      console.error('Form login tidak ditemukan.');
   }
 });
