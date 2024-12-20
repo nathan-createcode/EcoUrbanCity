@@ -39,12 +39,12 @@
                             autocomplete="current-password">
                     </div>
 
-                    <!-- Link Registrasi -->
+                    <!-- Link Registrasi
                     <div class="form-group account-link">
                         <p>Belum punya akun?
                           <a href="../registration/registration.html" class="signup-link">Registrasi di sini</a>
                         </p>
-                    </div>
+                    </div> -->
 
                     <!-- Tombol Submit -->
                     <button type="submit" class="submit-btn">Masuk</button>
