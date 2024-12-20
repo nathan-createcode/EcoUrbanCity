@@ -9,8 +9,7 @@ header("Expires: 0");
 // Memeriksa sesi login
 if (!isset($_SESSION['email']) || !isset($_SESSION['role'])) {
     // Jika tidak ada sesi, arahkan ke halaman login
-    header("Location: login_adgov.html");
+    header("Location: login_adgov.php");
     exit();
 }
 ?>
-

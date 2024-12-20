@@ -1,55 +1,35 @@
-<?php
-session_start();
-include '../php/config.php'; // Koneksi ke database
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Smart City Portal Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="login_adgov.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form method="POST" action="login_adgov_L.php" id="loginForm" class="active" autocomplete="off">
+                <h2 class="welcome-text">Smart City Portal</h2>
+                <p class="greeting-text">Halo, Admin dan Government!</p>
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']); // Hash password input dengan MD5
+                <div class="form-group">
+                    <input id="email" name="email" type="email" placeholder="Email" required>
+                </div>
 
-    // Koneksi database
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                <div class="form-group">
+                    <input id="password" name="password" type="password" placeholder="Password" required>
+                </div>
 
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
+                <button type="submit" class="submit-btn">LOG IN</button>
+            </form>
+        </div>
+    </div>
 
-    // Cek di tabel admin
-    $sql_admin = "SELECT * FROM admin WHERE email = '$email' AND password = '$password'";
-    $result_admin = $conn->query($sql_admin);
-
-    if ($result_admin->num_rows > 0) {
-        $_SESSION['role'] = 'admin';
-        $_SESSION['email'] = $email;
-        $_SESSION['loggedIn'] = true; // Menandakan bahwa sesi login berhasil
-        header("Location: ../admin/admin_dashboard.html");
-        exit();
-    }
-
-    // Cek di tabel government
-    $sql_gov = "SELECT * FROM government WHERE email = '$email' AND password = '$password'";
-    $result_gov = $conn->query($sql_gov);
-
-    if ($result_gov->num_rows > 0) {
-        $row = $result_gov->fetch_assoc(); // Ambil data dari database
-        $_SESSION['role'] = $row['role'];  // Simpan role spesifik
-        $_SESSION['email'] = $email;
-        $_SESSION['loggedIn'] = true; // Menandakan bahwa sesi login berhasil
-
-        // Redirect berdasarkan role government
-        if ($row['role'] == 'perhubungan') {
-            header("Location: ../government/perhubungan_module.php");
-        } elseif ($row['role'] == 'lingkungan') {
-            header("Location: ../government/lingkungan_module.php");
-        } elseif ($row['role'] == 'sipil') {
-            header("Location: ../government/sipil_module.php");
-        } else {
-            echo "Role tidak dikenali!";
-        }
-        exit();
-    }
-
-    // Jika tidak cocok di kedua tabel
-    echo "Email atau Password salah!";
-    $conn->close();
-}
-?>
+    <script src="login_adgov.js"></script>
+</body>
+</html>

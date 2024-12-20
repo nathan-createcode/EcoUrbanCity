@@ -164,6 +164,7 @@
             <li><a href="/layanan" class="nav-item">Layanan</a></li>
             <li><a href="/tentang" class="nav-item">Tentang</a></li>
             <li><a href="/kontak" class="nav-item">Kontak</a></li>
+            <li><a href="../admin/logout_admin.php"></a></li>
         </ul>
     </nav>
 

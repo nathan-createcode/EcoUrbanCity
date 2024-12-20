@@ -1,57 +1,57 @@
-<?php
-session_start();
-require_once '../php/config.php'; // File koneksi database
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EcoUrbanCity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <h1 class="welcome-text">Welcome back<br>to EcoUrbanCity!</h1>
+        </div>
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Ambil input email dan password dari form
-    $email = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? '');
+        <div class="right-section">
+            <div class="login-card">
+                <form class="login-form" id="loginForm" method="POST" action="login_L.php" autocomplete="off">
+                    <div class="form-header">
+                        <h2>Selamat Datang Kembali</h2>
+                        <p>Your gateway to a smarter, greener city life awaits.</p>
+                    </div>
 
-    // Validasi input kosong
-    if (empty($email) || empty($password)) {
-        echo "error"; // Input kosong
-        exit();
-    }
+                    <!-- Input Email -->
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <i class="fas fa-envelope"></i>
+                      <input type="email" id="email" name="email" required
+                            placeholder="Masukkan email Anda"
+                            autocomplete="email">
+                    </div>
 
-    // Query untuk mencari user berdasarkan email
-    $query = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($query);
+                    <!-- Input Password -->
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <i class="fas fa-key"></i>
+                      <input type="password" id="password" name="password" required
+                            placeholder="Masukkan password Anda"
+                            autocomplete="current-password">
+                    </div>
 
-    if (!$stmt) {
-        die("Query error: " . $conn->error);
-    }
+                    <!-- Link Registrasi -->
+                    <div class="form-group account-link">
+                        <p>Belum punya akun?
+                          <a href="../registration/registration.html" class="signup-link">Registrasi di sini</a>
+                        </p>
+                    </div>
 
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Cek jika user ditemukan
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
-
-        // Verifikasi password dengan password_hash() dari kolom "password"
-        if (password_verify($password, $user['password'])) {
-            // Set session jika password cocok
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['first_name'] = $user['firstName'];
-            $_SESSION['last_name'] = $user['lastName'];
-
-            // Kirim respons sukses ke JavaScript
-            echo "success";
-            exit();
-        } else {
-            // Password salah
-            echo "error";
-            exit();
-        }
-    } else {
-        // Jika email tidak ditemukan
-        echo "error";
-        exit();
-    }
-} else {
-    // Redirect jika halaman diakses langsung
-    header('Location: login.html');
-    exit();
-}
-?>
+                    <!-- Tombol Submit -->
+                    <button type="submit" class="submit-btn">Masuk</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="login.js"></script> -->
+</body>
+</html>
