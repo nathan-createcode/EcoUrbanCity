@@ -12,7 +12,7 @@
 </head>
 <body>
 <!-- NAVIGASI-->
-    <?php include 'php/navbar.php'; ?>
+    <?php include 'php/header.php'; ?>
 
     <div class="container">
         <header>
