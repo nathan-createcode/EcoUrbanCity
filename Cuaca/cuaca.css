@@ -4,7 +4,6 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: bolder;
     margin: 0;
     padding: 0;
     background: #ECECEC;
@@ -181,6 +180,7 @@ h1 {
     margin: 0 auto;
     max-width: 1000px;
     margin-top: 30px;
+    margin-bottom: 60px;
 }
 
 .metric {

@@ -11,8 +11,8 @@
     <script src="cuaca.js"></script>
 </head>
 <body>
-<!-- NAVIGASI-->
-    <?php include 'php/header.php'; ?>
+<!-- HEADER-->
+    <?php include '../php/header.php'; ?>
 
     <div class="container">
         <header>
@@ -66,6 +66,6 @@
     </div>
 
 <!--FOOTER-->
-    <?php include 'php/footer.php'; ?>
+    <?php include '../php/footer.php'; ?>
 </body>
 </html>
