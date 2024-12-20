@@ -14,7 +14,7 @@ main {
 .date-filter button {
     margin: 0 5px;
     padding: 10px;
-    background: #FFC107;
+    background: #1a1f4d;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -37,4 +37,70 @@ main {
     width: 50px;
     vertical-align: middle;
     margin-right: 5px;
+}
+
+
+
+.date-filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.date-button-form {
+    display: inline-block;
+    width: 100%;
+}
+
+.date-button {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.date-button:hover {
+    background-color: #1a1f4d;
+    color: #FFC107;
+    font-weight: bold;
+
+}
+
+.date-button.active {
+    background-color: #FFC107;
+    color: white;
+    font-weight: bold;
+}
+
+.date-button:focus {
+    outline: none;
+}
+
+.transport-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.transport-table th, 
+.transport-table td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.transport-table th {
+    background-color: #1a1f4d;
+    color: white;
+}
+
+.transport-table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }

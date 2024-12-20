@@ -39,7 +39,10 @@ $result_transport = $conn->query($sql_transport);
                 $tanggal = $row_date['tanggal'];
                 $formatted_date = date("l, d M Y", strtotime($tanggal));
                 $is_active = ($tanggal_terpilih == $tanggal) ? 'active' : '';
-                echo "<a href='?tanggal=$tanggal' class='date-button $is_active'>$formatted_date</a>";
+                echo "<form method='get' class='date-button-form'>
+                          <input type='hidden' name='tanggal' value='$tanggal'>
+                          <button type='submit' class='date-button $is_active'>$formatted_date</button>
+                      </form>";
             }
         } else {
             echo "<p>Tidak ada tanggal yang tersedia.</p>";
