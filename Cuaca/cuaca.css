@@ -136,6 +136,7 @@ h1 {
 /*BATAS*/
 
 .aqi {
+    display: block;
     background-color: rgba(41, 48, 128, 0.39);
     border-radius: 15px;
     padding: 20px;

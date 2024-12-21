@@ -15,6 +15,19 @@ async function getWeatherData(location) {
     }
 }
 
+// Fungsi untuk memperbarui AQI
+function updateAQI() {
+    const aqiElement = document.querySelector('.aqi-value');
+    const progressElement = document.querySelector('.progress');
+    const aqiSection = document.querySelector('.aqi');
+
+    if (aqiElement && progressElement && aqiSection) {
+        aqiElement.textContent = 'Healthy (90) - Static Data';
+        progressElement.style.width = '60%';
+        aqiSection.style.display = 'block';
+    }
+}
+
 // Fungsi untuk memperbarui UI dengan data cuaca
 function updateWeatherUI(data) {
     const today = data.list[0];
@@ -50,29 +63,21 @@ function updateWeatherUI(data) {
     }
 
     // Memperbarui kartu cuaca untuk hari-hari berikutnya
-    const dayCards = document.querySelectorAll('.weather-cards .card');
-    nextDays.forEach((day, index) => { //slice(1)
-        const card = dayCards[index];
-        if (card) {
-            const dayElement = card.querySelector('.day');
-            const temperatureElement = card.querySelector('.temperature');
-            const weatherIconElement = card.querySelector('.weather-icon i');
+    const dayCards = document.querySelectorAll('.weather-cards .card:not(.today)');
+    nextDays.slice(1).forEach((day, index) => { //slice(1)
+        if (index < dayCards.length) {
+            const card = dayCards[index];
+            if (card) {
+                const dayElement = card.querySelector('.day');
+                const temperatureElement = card.querySelector('.temperature');
+                const weatherIconElement = card.querySelector('.weather-icon i');
             
-            if (dayElement) dayElement.textContent = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'long' });
-            if (temperatureElement) temperatureElement.textContent = `${Math.round(day.main.temp)}°C`;
-            if (weatherIconElement) weatherIconElement.setAttribute('data-lucide', getWeatherIcon(day.weather[0].main));
+                if (dayElement) dayElement.textContent = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'long' });
+                if (temperatureElement) temperatureElement.textContent = `${Math.round(day.main.temp)}°C`;
+                if (weatherIconElement) weatherIconElement.setAttribute('data-lucide', getWeatherIcon(day.weather[0].main));
+            }
         }
     });
-
-    //memperbarui AQI
-    if (today.main.aqi) {
-        const aqi = calculateAQI(today.main.aqi);
-        document.querySelector('.aqi-value').textContent = `${aqi.level} (${aqi.value})`;
-        document.querySelector('.progress').style.width = `${aqi.percentage}%`;
-    } else {
-        document.querySelector('.aqi-value').textContent = 'Data tidak tersedia';
-        document.querySelector('.progress').style.width = '0%';
-    }
 
     // Memperbarui metrik
     updateMetric('.metric:nth-child(1) .metric-value', getUVIndex(today.main.temp));
@@ -82,6 +87,9 @@ function updateWeatherUI(data) {
     updateMetric('.metric:nth-child(5) .metric-value', `${today.visibility / 1000} km`);
     updateMetric('.metric:nth-child(6) .metric-value', `${today.main.pressure} hPa`);
 
+    //memperbarui AQI
+    updateAQI();
+
     // Memperbarui ikon
     lucide.createIcons();
 }
@@ -90,16 +98,6 @@ function updateWeatherUI(data) {
 function updateMetric(selector, value) {
     const element = document.querySelector(selector);
     if (element) element.textContent = value;
-}
-
-//Fungsi menghitung AQI
-function calculateAQI(aqiValue) {
-    if (aqiValue <= 50) return { level: 'Good', value: aqiValue, percentage: aqiValue * 2 };
-    if (aqiValue <= 100) return { level: 'Moderate', value: aqiValue, percentage: 50 + (aqiValue - 50) };
-    if (aqiValue <= 150) return { level: 'Unhealthy for Sensitive Groups', value: aqiValue, percentage: 75 + (aqiValue - 100) / 2 };
-    if (aqiValue <= 200) return { level: 'Unhealthy', value: aqiValue, percentage: 87.5 + (aqiValue - 150) / 4 };
-    if (aqiValue <= 300) return { level: 'Very Unhealthy', value: aqiValue, percentage: 93.75 + (aqiValue - 200) / 8 };
-    return { level: 'Hazardous', value: aqiValue, percentage: 100 };
 }
 
 // Fungsi untuk mendapatkan ikon cuaca yang sesuai
@@ -170,6 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inisialisasi peta
     initMap();
+
+    //memperbarui AQI
+    updateAQI();
 
     const searchInput = document.getElementById('search');
     searchInput.addEventListener('keypress', async function(e) {
