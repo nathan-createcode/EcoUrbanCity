@@ -31,6 +31,11 @@ $result_transport = $conn->query($sql_transport);
 <main>
     <h2>SmartCity’s Transport</h2>
 
+        <!-- Teks Motivasi -->
+        <p class="motivational-text" font-size: 20px >
+        When you ride public transit, you’re not just reaching your destination—you’re contributing to the solution.
+    </p>
+
     <!-- Tombol Filter Tanggal -->
     <div class="date-filter">
         <?php
