@@ -34,7 +34,7 @@ main {
     color: white;
 }
 .icon {
-    width: 50px;
+    width: 60px;
     vertical-align: middle;
     margin-right: 5px;
 }
@@ -91,7 +91,7 @@ main {
 
 .transport-table th, 
 .transport-table td {
-    text-align: left;
+    text-align: center;
     padding: 12px;
     border: 1px solid #ddd;
 }
