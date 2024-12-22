@@ -236,10 +236,12 @@ nav ul li a:hover {
   transform: translateY(-5px);
 }
 
+/* Perbaikan untuk gambar dalam event card */
 .event-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .event-overlay {
@@ -580,26 +582,99 @@ blockquote {
 }
 
 .modal-content {
-  background-color: #fff;
-  margin: 10% auto;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 600px;
-  position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 800px;
+    position: relative;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-header {
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* Perbaikan untuk gambar dalam modal */
+.event-detail-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.event-info {
+    margin-bottom: 1.5rem;
+}
+
+.event-info p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+.event-description {
+    line-height: 1.6;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--danger);
 }
 
 .close {
-  position: absolute;
-  right: 1rem;
-  top: 0.5rem;
-  font-size: 2rem;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .close:hover {
-  color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% 1rem;
+        padding: 1.5rem;
+    }
+
+    .event-detail-img {
+        height: 300px;
+    }
+
+    .event-card img {
+        height: 180px;
+    }
 }
 
 /* Animations */
@@ -727,3 +802,4 @@ blockquote {
     display: none;
   }
 }
+

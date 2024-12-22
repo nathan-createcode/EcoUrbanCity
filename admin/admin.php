@@ -18,13 +18,19 @@ include 'sidebar.php';
 
         <main class="main-content">
             <header class="header">
-                <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
-                <div class="user-info">
-                    <span><?php echo $_SESSION['role']; ?></span>
-                    <a href="../Login_adgov/logout_adgov.php" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </div>
+        <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+        <div class="user-info">
+            <?php
+            // Get the logged in admin's email
+            $admin_email = $_SESSION['email']; // Assuming email is stored in session
+            $query = mysqli_query($conn, "SELECT email FROM admin WHERE email = '$admin_email'");
+            $admin = mysqli_fetch_assoc($query);
+            ?>
+            <span><?php echo $admin['email']; ?></span>
+            <a href="../Login_adgov/logout_adgov.php" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
             </header>
 
             <div class="stats-grid">

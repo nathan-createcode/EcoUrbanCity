@@ -200,6 +200,7 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
     <!-- Scripts -->
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="dashboard.js"></script>
+    <script src="https://kit.fontawesome.com/YOUR-KIT-ID.js" crossorigin="anonymous"></script>
 </body>
 </html>
 

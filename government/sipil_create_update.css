@@ -1,0 +1,278 @@
+:root {
+  --primary-color: #1a1f4d;
+  --secondary-color: #4B0082;
+  --accent-color: #FFD700;
+  --text-color: #333333;
+  --background-color: #f5f5f5;
+  --primary: #2b3377;
+  --secondary: #6c63ff;
+  --accent: #f3f4ff;
+  --text-primary: #2b3377;
+  --text-secondary: #64748b;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --card-bg: #e5e7ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+h2 i {
+  color: var(--accent-color);
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid #f5c6cb;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+label i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e1e1e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(26, 31, 77, 0.1);
+  outline: none;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn i {
+  font-size: 1.1rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+}
+
+/* Container untuk form group */
+.form-group {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* Label styling */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Container utama untuk upload */
+.upload-container {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+/* Area upload dengan border */
+.upload-area {
+  width: 100%;
+  max-width: 100%;
+  border: 2px dashed #4B0082;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  position: relative;
+  padding: 10px;
+}
+
+/* Container untuk preview dengan ukuran tetap */
+.preview-container {
+  width: 100%;
+  height: 250px; /* Ukuran tetap untuk container */
+  position: relative;
+  overflow: hidden; /* Penting: memastikan konten tidak overflow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+/* Wrapper untuk gambar preview */
+.image-preview {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Tambahan overflow hidden */
+}
+
+/* Style untuk gambar yang diupload */
+.uploaded-image {
+  max-width: 100;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Preview content (teks placeholder) */
+.preview-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.placeholder-text {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.choose-photo {
+  color: #4B0082;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.file-info {
+  font-size: 0.875rem;
+  color: #999;
+  margin-top: 8px;
+}
+
+/* Tombol hapus */
+.remove-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.remove-image:hover {
+  background-color: #fff;
+}
+
+/* State saat drag */
+.upload-area.drag-over {
+  background-color: rgba(75, 0, 130, 0.05);
+  border-color: #6c63ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .preview-container {
+      height: 200px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
