@@ -61,7 +61,7 @@ h1 {
     flex: 1;
     padding: 15px;
     text-align: center;
-    background-color: rgba(41, 48, 128, 0.39);
+    background-color: #293080;
     border-radius: 10px;
     color: white;
     margin-bottom: 30px;
@@ -137,7 +137,7 @@ h1 {
 
 .aqi {
     display: block;
-    background-color: rgba(41, 48, 128, 0.39);
+    background-color: #293080;
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -145,7 +145,7 @@ h1 {
     max-width: 900px;
     width: 100%;
     margin: 30px auto 30px auto;
-    height: 145px;
+    height: 150px;
 }
 
 .aqi h2 {
@@ -185,7 +185,7 @@ h1 {
 }
 
 .metric {
-    background-color: rgba(41, 48, 128, 0.39);
+    background-color: #293080;
     border-radius: 15px;
     padding: 20px;
     color: white;

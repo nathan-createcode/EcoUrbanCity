@@ -22,7 +22,7 @@ function updateAQI() {
     const aqiSection = document.querySelector('.aqi');
 
     if (aqiElement && progressElement && aqiSection) {
-        aqiElement.textContent = 'Healthy (90) - Static Data';
+        aqiElement.textContent = 'Healthy (90)';
         progressElement.style.width = '60%';
         aqiSection.style.display = 'block';
     }

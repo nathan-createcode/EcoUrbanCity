@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <link rel="stylesheet" href="cuaca.css">
+    <link rel="stylesheet" href="../cuaca/cuaca.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="cuaca.js"></script>
+    <script src="../cuaca/cuaca.js"></script>
 </head>
 <body>
 <!-- HEADER-->
