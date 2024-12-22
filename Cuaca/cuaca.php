@@ -68,14 +68,6 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
 
         <div id="map"></div>
 
-        <div class="aqi">
-            <h2>AQI</h2>
-            <div class="aqi-value">Healthy (90)</div>
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
-        </div>
-
         <div class="metrics">
             <div class="metric"><div class="metric-label"><i data-lucide="sun"></i> UV Index</div><div class="metric-value">Very High</div></div>
             <div class="metric"><div class="metric-label"><i data-lucide="droplets"></i> Humidity</div><div class="metric-value">80%</div></div>

@@ -15,19 +15,6 @@ async function getWeatherData(location) {
     }
 }
 
-// Fungsi untuk memperbarui AQI
-function updateAQI() {
-    const aqiElement = document.querySelector('.aqi-value');
-    const progressElement = document.querySelector('.progress');
-    const aqiSection = document.querySelector('.aqi');
-
-    if (aqiElement && progressElement && aqiSection) {
-        aqiElement.textContent = 'Healthy (90)';
-        progressElement.style.width = '60%';
-        aqiSection.style.display = 'block';
-    }
-}
-
 // Fungsi untuk memperbarui UI dengan data cuaca
 function updateWeatherUI(data) {
     const today = data.list[0];
@@ -86,9 +73,6 @@ function updateWeatherUI(data) {
     updateMetric('.metric:nth-child(4) .metric-value', `${Math.round(today.main.feels_like)}°C`);
     updateMetric('.metric:nth-child(5) .metric-value', `${today.visibility / 1000} km`);
     updateMetric('.metric:nth-child(6) .metric-value', `${today.main.pressure} hPa`);
-
-    //memperbarui AQI
-    updateAQI();
 
     // Memperbarui ikon
     lucide.createIcons();
@@ -168,9 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inisialisasi peta
     initMap();
-
-    //memperbarui AQI
-    updateAQI();
 
     const searchInput = document.getElementById('search');
     searchInput.addEventListener('keypress', async function(e) {

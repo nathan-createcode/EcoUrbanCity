@@ -135,42 +135,6 @@ h1 {
 }
 /*BATAS*/
 
-.aqi {
-    display: block;
-    background-color: #293080;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    color: white;
-    max-width: 900px;
-    width: 100%;
-    margin: 30px auto 30px auto;
-    height: 150px;
-}
-
-.aqi h2 {
-    margin: 0 0 10px;
-}
-
-.aqi-value {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.progress-bar {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    height: 10px;
-    overflow: hidden;
-}
-
-.progress {
-    width: 60%;
-    height: 100%;
-    background-color: #4CAF50;
-}
-
 .metrics {
     display: flex;
     flex-wrap: wrap;
