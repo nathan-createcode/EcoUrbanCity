@@ -23,13 +23,13 @@ $result_transport = $conn->query($sql_transport);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartCity Transport</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="traffic.css">
 </head>
 <body>
 <?php include_once('../php/header.php'); ?>
 
 <main>
-    <h2>SmartCity’s Transport</h2>
+<h1 style="color: #1a1f4d;">SmartCity’s Transport</h1>
 
         <!-- Teks Motivasi -->
         <p class="motivational-text" font-size: 20px >
