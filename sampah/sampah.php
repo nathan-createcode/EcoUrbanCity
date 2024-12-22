@@ -65,7 +65,7 @@ $conn->close();
                 </blockquote>
             </div>
             <div class="hero-image">
-                <img src="../img/truck.png" alt="Garbage Truck">
+                <img src="../img/planet-earth.png" alt="planet-earth">
             </div>
         </section>
 
