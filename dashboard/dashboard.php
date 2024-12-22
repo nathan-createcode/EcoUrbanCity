@@ -3,11 +3,13 @@ session_start();
 require_once '../php/config.php';
 require_once 'auth.php';
 
+// Cek apakah user sudah login
 if (!isLoggedIn()) {
     header('Location: ../login/login.html');
     exit();
 }
 
+// Ambil data user
 $userData = getUserData($_SESSION['user_id']);
 
 if (!$userData) {
@@ -17,6 +19,80 @@ if (!$userData) {
 
 $firstName = htmlspecialchars($userData['firstName'] ?? 'User');
 $lastName = htmlspecialchars($userData['lastName'] ?? '');
+
+// Hitung total users
+$query_users = mysqli_query($conn, "SELECT COUNT(*) as total FROM users");
+$total_users = mysqli_fetch_assoc($query_users)['total'];
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    header('Content-Type: application/json');
+
+    // Validasi input
+    if (empty($_POST['category']) || empty($_POST['description'])) {
+        echo json_encode(['success' => false, 'message' => 'Field tidak boleh kosong!']);
+        exit;
+    }
+
+    $kategori = $_POST['category'];
+    $deskripsi = $_POST['description'];
+    $photo = null;
+
+    // Handle file upload
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK) {
+        $uploadDir = "../uploads/";
+
+        // Buat direktori jika belum ada
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Generate unique filename
+        $fileName = uniqid() . '_' . basename($_FILES['image_file']['name']);
+        $targetPath = $uploadDir . $fileName;
+
+        // Validasi tipe file
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        if (!in_array($_FILES['image_file']['type'], $allowedTypes)) {
+            echo json_encode(['success' => false, 'message' => 'Tipe file tidak didukung']);
+            exit;
+        }
+
+        // Validasi ukuran file (max 5MB)
+        if ($_FILES['image_file']['size'] > 5 * 1024 * 1024) {
+            echo json_encode(['success' => false, 'message' => 'Ukuran file terlalu besar (max 5MB)']);
+            exit;
+        }
+
+        if (move_uploaded_file($_FILES['image_file']['tmp_name'], $targetPath)) {
+            $photo = 'uploads/' . $fileName;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Gagal mengupload file']);
+            exit;
+        }
+    }
+
+    // Set role sama dengan kategori
+    $role = $kategori;
+
+    try {
+        // Prepare statement untuk mencegah SQL injection
+        $stmt = $conn->prepare("INSERT INTO laporan_infrastruktur (kategori, deskripsi_masalah, photo, role) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $kategori, $deskripsi, $photo, $role);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Laporan berhasil dikirim']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Gagal menyimpan laporan: ' . $stmt->error]);
+        }
+
+        $stmt->close();
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +102,6 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoUrbanCity - Dashboard</title>
     <link rel="stylesheet" href="../dashboard/dashboard.css">
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -35,20 +110,20 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
     <main>
         <!-- Hero Section -->
         <section class="hero">
-          <div class="hero-content">
-            <h1>EcoUrbanCity</h1>
-            <p>Inisiatif untuk menciptakan kota yang lebih cerdas, berkelanjutan, dan nyaman bagi seluruh warga.</p>
-            <div class="search-container">
-              <input type="text" placeholder="Search" class="search-input">
-              <button type="submit" class="search-button">
-                <i data-feather="search"></i>
-              </button>
+            <div class="hero-content">
+                <h1>EcoUrbanCity</h1>
+                <p>Inisiatif untuk menciptakan kota yang lebih cerdas, berkelanjutan, dan nyaman bagi seluruh warga.</p>
+                <div class="search-container">
+                    <input type="text" placeholder="Search" class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
-          </div>
-          <div class="hero-illustration">
-            <img src="../img/2Purple Minimalist Zoom Virtual Background (2).png" alt="EcoUrbanCity Illustration" />
-          </div>
-          <div class="scroll-indicator"></div>
+            <div class="hero-illustration">
+                <img src="../img/2Purple Minimalist Zoom Virtual Background (2).png" alt="EcoUrbanCity Illustration" />
+            </div>
+            <div class="scroll-indicator"></div>
         </section>
 
         <!-- Services Section -->
@@ -96,43 +171,30 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
             <!-- Service Cards Grid -->
             <div class="service-grid">
                 <div class="service-card">
-                    <i data-feather="message-square" class="service-icon"></i>
-                    <h3>Forum Komunitas</h3>
-                    <p>24 Diskusi Aktif</p>
-                    <a href="#" class="see-more">see more</a>
-                </div>
-                <div class="service-card">
-                    <i data-feather="trash-2" class="service-icon"></i>
+                    <i class="fas fa-trash-alt service-icon"></i>
                     <h3>Informasi Sampah</h3>
                     <p>Update Terkini</p>
                     <a href="#" class="see-more">see more</a>
                 </div>
                 <div class="service-card">
-                    <i data-feather="bar-chart-2" class="service-icon"></i>
+                    <i class="fas fa-chart-bar service-icon"></i>
                     <h3>Statistik Kota</h3>
-                    <p>Data Real-time</p>
-                    <a href="#" class="see-more">see more</a>
+                    <p><?php echo $total_users; ?>/50</p>
                 </div>
                 <div class="service-card">
-                    <i data-feather="activity" class="service-icon"></i>
-                    <h3>Monitoring Lalu Lintas</h3>
+                    <i class="fas fa-car service-icon"></i>
+                    <h3>Transportation</h3>
                     <p id="traffic-status">Memuat...</p>
                     <a href="#" class="see-more">see more</a>
                 </div>
                 <div class="service-card">
-                    <i data-feather="wind" class="service-icon"></i>
+                    <i class="fas fa-wind service-icon"></i>
                     <h3>Kualitas Udara</h3>
-                    <p id="air-quality">Memuat...</p>
+                    <p>Check Now</p>
                     <a href="#" class="see-more">see more</a>
                 </div>
                 <div class="service-card">
-                    <i data-feather="alert-triangle" class="service-icon"></i>
-                    <h3>Notifikasi Darurat</h3>
-                    <p>Tidak ada kejadian darurat</p>
-                    <a href="#" class="see-more">see more</a>
-                </div>
-                <div class="service-card">
-                    <i data-feather="file-text" class="service-icon"></i>
+                    <i class="fas fa-file-alt service-icon"></i>
                     <h3>Laporan Infrastruktur</h3>
                     <p>3 Laporan Baru</p>
                     <a href="#" class="see-more">see more</a>
@@ -149,7 +211,6 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
                 <button class="get-in-touch">Get in touch</button>
             </div>
             <div class="quote-illustration">
-                <!-- <i data-feather="home" class="quote-icon"></i> -->
             </div>
         </section>
 
@@ -161,9 +222,9 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
                     <label for="category">Kategori</label>
                     <select id="category" name="category" required>
                         <option value="">Pilih kategori</option>
-                        <option value="dinas_perhubungan">Dinas Perhubungan</option>
-                        <option value="dinas_lingkungan">Dinas Lingkungan</option>
-                        <option value="dinas_sipil">Dinas Sipil</option>
+                        <option value="perhubungan">Perhubungan</option>
+                        <option value="lingkungan">Lingkungan</option>
+                        <option value="sipil">Sipil</option>
                     </select>
                 </div>
 
@@ -173,12 +234,24 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
                 </div>
 
                 <div class="form-group">
-                    <label for="photo">Foto Laporan</label>
-                    <div class="upload-area" id="uploadArea">
-                        <i data-feather="upload" class="upload-icon"></i>
-                        <p>Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
-                        <p class="file-info">Supported formats: JPG, PNG, GIF (Max size: 5 MB)</p>
-                        <input type="file" id="photo" name="photo" accept="image/*" hidden>
+                    <label for="image_file">
+                        <i class="fas fa-image"></i> Unggah Gambar
+                    </label>
+                    <div class="upload-container">
+                        <div id="uploadArea" class="upload-area">
+                            <input type="file"
+                                   id="image_file"
+                                   name="image_file"
+                                   required
+                                   accept="image/png, image/jpeg, image/jpg, image/gif"
+                                   style="display: none;">
+                            <div id="preview-container" class="preview-container">
+                                <div class="preview-content">
+                                    <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
+                                    <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -198,9 +271,6 @@ $lastName = htmlspecialchars($userData['lastName'] ?? '');
     </div>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/feather-icons"></script>
     <script src="dashboard.js"></script>
-    <script src="https://kit.fontawesome.com/YOUR-KIT-ID.js" crossorigin="anonymous"></script>
 </body>
 </html>
-

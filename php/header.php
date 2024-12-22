@@ -87,6 +87,8 @@
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        position: relative;
+        cursor: pointer;
     }
 
     .avatar {
@@ -122,6 +124,48 @@
         text-align: right;
     }
 
+    .user-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--primary-color);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        border-radius: 4px;
+        padding: 0.5rem 0;
+        margin-top: 0.5rem;
+        z-index: 1000;
+    }
+
+    .user-profile:hover .user-dropdown {
+        display: block;
+    }
+
+    .logout-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .logout-button:hover {
+        background-color: var(--secondary-color);
+        color: var(--accent-color);
+    }
+
+    .logout-button i {
+        font-size: 1.1rem;
+    }
+
     @media (max-width: 1024px) {
         .navbar {
             padding: 1rem 2rem;
@@ -150,6 +194,61 @@
             justify-content: center;
         }
     }
+
+    .nav-item.dropdown {
+        position: relative;
+    }
+
+    .dropdown-toggle::after {
+        content: '\25BC';
+        font-size: 0.7em;
+        margin-left: 0.5em;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: var(--primary-color);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 4px;
+        padding: 0.5rem 0;
+    }
+
+    .dropdown-menu li {
+        margin: 0;
+    }
+
+    .dropdown-item {
+        color: white;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: var(--secondary-color);
+        color: var(--accent-color);
+    }
+
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .dropdown-menu {
+            position: static;
+            background-color: transparent;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1rem 0.5rem 2rem;
+        }
+    }
 </style>
 
 <header class="navbar">
@@ -160,11 +259,17 @@
 
     <nav>
         <ul class="nav-menu">
-            <li><a href="/beranda" class="nav-item active">Beranda</a></li>
-            <li><a href="/layanan" class="nav-item">Layanan</a></li>
+            <li><a href="../dashboard/dashboard.php" class="nav-item active">Beranda</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">Layanan</a>
+                <ul class="dropdown-menu">
+                    <li><a href="../traffic/traffic.php" class="dropdown-item" class="nav-item active">Layanan Traffic</a></li>
+                    <li><a href="../sampah/sampah.php" class="dropdown-item" class="nav-item active">Jadwal Sampah</a></li>
+                    <li><a href="../cuaca/cuaca.php" class="dropdown-item" class="nav-item active">Weather</a></li>
+                </ul>
+            </li>
             <li><a href="/tentang" class="nav-item">Tentang</a></li>
             <li><a href="/kontak" class="nav-item">Kontak</a></li>
-            <li><a href="../admin/logout_admin.php"></a></li>
         </ul>
     </nav>
 
@@ -193,6 +298,16 @@
                 echo "<span class='avatar-initials'>" . htmlspecialchars($initials) . "</span>";
             }
             ?>
+        </div>
+
+        <!-- Dropdown Menu untuk Logout -->
+        <div class="user-dropdown">
+            <form action="../logout.php" method="POST">
+                <button type="submit" class="logout-button">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 </header>

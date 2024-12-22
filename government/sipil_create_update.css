@@ -137,7 +137,7 @@ textarea:focus {
   color: white;
 }
 
-/* Container untuk form group */
+/* Container untuk form group NOTE THE IMPORTANT STYLE FOR ME*/
 .form-group {
   margin-bottom: 1.5rem;
   width: 100%;
@@ -260,6 +260,7 @@ textarea:focus {
       height: 200px;
   }
 }
+/* Batas bawah */
 
 @media screen and (max-width: 768px) {
   .container {

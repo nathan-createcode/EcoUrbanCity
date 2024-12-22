@@ -1,3 +1,25 @@
+<?php
+session_start();
+require_once '../php/config.php';
+require_once '../dashboard/auth.php';
+require_once '../php/config.php'; // Added line
+
+// Check if user is logged in
+if (!isLoggedIn()) {
+    header('Location: ../login/login.html');
+    exit();
+}
+
+// Get user data
+$userData = getUserData($_SESSION['user_id']);
+if (!$userData) {
+    header('Location: ../login/login.html');
+    exit();
+}
+
+$firstName = htmlspecialchars($userData['firstName'] ?? 'User');
+$lastName = htmlspecialchars($userData['lastName'] ?? '');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +33,7 @@
     <script src="../cuaca/cuaca.js"></script>
 </head>
 <body>
-<!-- HEADER-->
-    <?php include '../php/header.php'; ?>
+    <?php include_once('../php/header.php'); ?>
 
     <div class="container">
         <header>
@@ -65,7 +86,6 @@
         </div>
     </div>
 
-<!--FOOTER-->
-    <?php include '../php/footer.php'; ?>
+    <?php include_once('../php/footer.php'); ?>
 </body>
 </html>

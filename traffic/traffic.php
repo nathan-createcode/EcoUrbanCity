@@ -1,6 +1,24 @@
 <?php
-// Sertakan file konfigurasi untuk koneksi ke database
+session_start();
 require_once '../php/config.php';
+require_once '../dashboard/auth.php';
+require_once '../php/config.php';
+
+// Check if user is logged in
+if (!isLoggedIn()) {
+    header('Location: ../login/login.html');
+    exit();
+}
+
+// Get user data
+$userData = getUserData($_SESSION['user_id']);
+if (!$userData) {
+    header('Location: ../login/login.html');
+    exit();
+}
+
+$firstName = htmlspecialchars($userData['firstName'] ?? 'User');
+$lastName = htmlspecialchars($userData['lastName'] ?? '');
 
 // Ambil tanggal dari URL atau gunakan default
 $tanggal_terpilih = isset($_GET['tanggal']) ? $_GET['tanggal'] : null;
@@ -29,11 +47,11 @@ $result_transport = $conn->query($sql_transport);
 <?php include_once('../php/header.php'); ?>
 
 <main>
-<h1 style="color: #1a1f4d;">SmartCity’s Transport</h1>
+<h1 style="color: #1a1f4d;">SmartCity's Transport</h1>
 
         <!-- Teks Motivasi -->
         <p class="motivational-text" font-size: 20px >
-        When you ride public transit, you’re not just reaching your destination—you’re contributing to the solution.
+        When you ride public transit, you're not just reaching your destination—you're contributing to the solution.
     </p>
 
     <!-- Tombol Filter Tanggal -->
@@ -74,15 +92,15 @@ $result_transport = $conn->query($sql_transport);
                     $time_departure = strtotime($row['berangkat']); // Waktu keberangkatan
                     $duration_in_minutes = (int)filter_var($row['durasi'], FILTER_SANITIZE_NUMBER_INT); // Ambil angka dari durasi
                     $time_arrival = date("H:i", strtotime("+$duration_in_minutes minutes", $time_departure)); // Hitung waktu tiba
-                    
+
                     // Format asal dan tujuan
                     $asal_berangkat = $row['asal'] . ' (' . date("H:i", $time_departure) . ' WIB)';
                     $tujuan_tiba = $row['tujuan'] . ' (' . $time_arrival . ' WIB)';
                     ?>
                     <tr>
                         <td>
-                            <img src="../img/<?= strtolower($row['jenis']) ?>.png" 
-                                 alt="<?= $row['jenis'] ?>" 
+                            <img src="../img/<?= strtolower($row['jenis']) ?>.png"
+                                 alt="<?= $row['jenis'] ?>"
                                  class="icon">
                             <?= strtoupper($row['jenis']) ?>
                         </td>
@@ -104,3 +122,4 @@ $result_transport = $conn->query($sql_transport);
 
 </body>
 </html>
+

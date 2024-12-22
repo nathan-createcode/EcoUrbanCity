@@ -1,47 +1,32 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ecourbancity"; //nama DB, diganti aja kalo ga sama
+session_start();
+require_once '../php/config.php';
+require_once '../dashboard/auth.php';
+require_once '../php/config.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Check if user is logged in
+if (!isLoggedIn()) {
+    header('Location: ../login/login.html');
+    exit();
 }
+
+// Get user data
+$userData = getUserData($_SESSION['user_id']);
+if (!$userData) {
+    header('Location: ../login/login.html');
+    exit();
+}
+
+$firstName = htmlspecialchars($userData['firstName'] ?? 'User');
+$lastName = htmlspecialchars($userData['lastName'] ?? '');
+
+// Database connection is handled in db.php
+
 
 // Query untuk mengambil data
-$sql = "SELECT area, time, days FROM jadwal_sampah"; //nama tabelnya jadwal_sampah
+$sql = "SELECT area, time, days FROM jadwal_sampah";
 $result = $conn->query($sql);
-
-// Tampilkan data jika ada hasil
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo '<div class="card">';
-        echo '    <div class="card-content">';
-        echo '        <div>';
-        echo '            <i class="fas fa-map-marker-alt icon-location card-icon"></i>';
-        echo '            <span>' . htmlspecialchars($row["area"]) . '</span>';
-        echo '        </div>';
-        echo '        <div>';
-        echo '            <i class="fas fa-clock card-icon"></i>';
-        echo '            <span>' . htmlspecialchars($row["time"]) . '</span>';
-        echo '        </div>';
-        echo '        <div>';
-        echo '            <i class="fas fa-calendar-alt icon-calendar card-icon"></i>';
-        echo '            <span>Setiap <span class="highlight">' . htmlspecialchars($row["days"]) . '</span></span>';
-        echo '        </div>';
-        echo '    </div>';
-        echo '</div>';
-    }
-} else {
-}
-
-$conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -53,8 +38,7 @@ $conn->close();
     <script src="sampah.js" defer></script>
 </head>
 <body>
-    <!--HEADER-->
-    <?php include '../php/header.php'; ?>
+    <?php include_once('../php/header.php'); ?>
 
     <main class="container">
         <section class="hero">
@@ -71,13 +55,33 @@ $conn->close();
 
         <section>
             <h2>Jadwal Pengangkutan Sampah</h2>
-            <p class="no-schedule-message">Tidak ada data jadwal pengangkutan sampah.</p>
-            <div class="schedule-cards" id="scheduleCards">
-                <!-- Schedule cards will be dynamically inserted here -->
-            </div>
+            <?php if ($result->num_rows > 0): ?>
+                <div class="schedule-cards" id="scheduleCards">
+                    <?php while($row = $result->fetch_assoc()): ?>
+                        <div class="card">
+                            <div class="card-content">
+                                <div>
+                                    <i class="fas fa-map-marker-alt icon-location card-icon"></i>
+                                    <span><?= htmlspecialchars($row["area"]) ?></span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-clock card-icon"></i>
+                                    <span><?= htmlspecialchars($row["time"]) ?></span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-calendar-alt icon-calendar card-icon"></i>
+                                    <span>Setiap <span class="highlight"><?= htmlspecialchars($row["days"]) ?></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            <?php else: ?>
+                <p class="no-schedule-message">Tidak ada data jadwal pengangkutan sampah.</p>
+            <?php endif; ?>
         </section>
     </main>
 
-    <?php include '../php/footer.php'; ?>
+    <?php include_once('../php/footer.php'); ?>
 </body>
 </html>
