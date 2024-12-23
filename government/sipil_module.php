@@ -13,6 +13,10 @@ if ($_SESSION['role'] !== 'sipil') {
 $query_users = mysqli_query($conn, "SELECT COUNT(*) as total FROM users");
 $total_users = mysqli_fetch_assoc($query_users)['total'];
 
+// Mengambil jumlah total laporan infrastruktur sipil
+$query_reports = mysqli_query($conn, "SELECT COUNT(*) as total FROM laporan_infrastruktur WHERE kategori = 'sipil' AND role = 'sipil'");
+$total_reports = mysqli_fetch_assoc($query_reports)['total'];
+
 // Mengambil email user yang sedang login
 $email = $_SESSION['email'];
 ?>
@@ -47,6 +51,13 @@ $email = $_SESSION['email'];
                     <h3>Total Users Terdaftar</h3>
                     <div class="stat-value">
                         <?php echo $total_users; ?>
+                    </div>
+                </div>
+                <div class="stat-card secondary">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Total Laporan Infrastruktur</h3>
+                    <div class="stat-value">
+                        <?php echo $total_reports; ?>
                     </div>
                 </div>
             </div>

@@ -7,23 +7,15 @@ $sidebar = '
     </div>
 
     <nav class="nav-menu">
-        <a href="sipil_module.php" class="nav-link">
+        <a href="perhubungan_module.php" class="nav-link">
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
         </a>
-        <a href="sipil_read_users.php" class="nav-link">
-            <i class="fas fa-users"></i>
-            Users
+        <a href="perhubungan_read_transport.php" class="nav-link">
+            <i class="fas fa-bus"></i>
+            Transportasi
         </a>
-        <a href="sipil_read_events.php" class="nav-link">
-            <i class="fas fa-calendar-alt"></i>
-            Events
-        </a>
-        <a href="../registration/registration.html" class="nav-link">
-            <i class="fas fa-user-plus"></i>
-            Registration
-        </a>
-                <a href="sipil_read_reports.php" class="nav-link">
+        <a href="perhubungan_read_reports.php" class="nav-link">
             <i class="fas fa-file-alt"></i>
             Laporan Infrastruktur
         </a>
