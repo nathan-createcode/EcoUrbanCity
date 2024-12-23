@@ -297,78 +297,81 @@ function initializeForm() {
   if (!form) return;
 
   form.onsubmit = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      // Validasi kategori
-      const categorySelect = form.querySelector('select[name="category"]');
-      if (!categorySelect || categorySelect.value.trim() === "") {
-          alert("Silakan pilih kategori!");
-          return;
+    // Validasi kategori
+    const categorySelect = form.querySelector('select[name="category"]');
+    if (!categorySelect || categorySelect.value.trim() === "") {
+      alert("Silakan pilih kategori!");
+      return;
+    }
+
+    // Validasi deskripsi
+    const descriptionTextarea = form.querySelector('textarea[name="description"]');
+    if (!descriptionTextarea || descriptionTextarea.value.trim() === "") {
+      alert("Deskripsi masalah tidak boleh kosong!");
+      return;
+    }
+
+    // Validasi file gambar
+    const fileInput = form.querySelector('input[name="image_file"]');
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+      alert("Silakan pilih gambar!");
+      return;
+    }
+
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    try {
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Mengirim...";
       }
 
-      // Validasi deskripsi
-      const descriptionTextarea = form.querySelector('textarea[name="description"]');
-      if (!descriptionTextarea || descriptionTextarea.value.trim() === "") {
-          alert("Deskripsi masalah tidak boleh kosong!");
-          return;
+      const formData = new FormData(form);
+
+      // Tambahkan kategori ke formData
+      formData.append('category', categorySelect.value);
+
+      // Kirim ke endpoint PHP yang sama
+      const response = await fetch(window.location.href, {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Validasi file gambar
-      const fileInput = form.querySelector('input[name="image_file"]');
-      if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-          alert("Silakan pilih gambar!");
-          return;
+      const result = await response.json();
+
+      if (result.success) {
+        alert(result.message);
+        form.reset();
+
+        // Reset preview gambar
+        const previewContainer = document.getElementById("preview-container");
+        if (previewContainer) {
+          previewContainer.innerHTML = `
+            <div class="preview-content">
+              <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
+              <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
+            </div>
+          `;
+        }
+      } else {
+        throw new Error(result.message || 'Gagal mengirim laporan');
       }
 
-      const submitButton = form.querySelector('button[type="submit"]');
-
-      try {
-          if (submitButton) {
-              submitButton.disabled = true;
-              submitButton.textContent = "Mengirim...";
-          }
-
-          const formData = new FormData(form);
-
-          // Kirim ke endpoint PHP yang sama
-          const response = await fetch(window.location.href, {
-              method: "POST",
-              body: formData
-          });
-
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const result = await response.json();
-
-          if (result.success) {
-              alert(result.message);
-              form.reset();
-
-              // Reset preview gambar
-              const previewContainer = document.getElementById("preview-container");
-              if (previewContainer) {
-                  previewContainer.innerHTML = `
-                      <div class="preview-content">
-                          <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
-                          <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
-                      </div>
-                  `;
-              }
-          } else {
-              throw new Error(result.message || 'Gagal mengirim laporan');
-          }
-
-      } catch (error) {
-          console.error("Error:", error);
-          alert(error.message || "Gagal mengirim laporan. Silakan coba lagi nanti.");
-      } finally {
-          if (submitButton) {
-              submitButton.disabled = false;
-              submitButton.textContent = "Kirim Laporan";
-          }
+    } catch (error) {
+      console.error("Error:", error);
+      alert(error.message || "Gagal mengirim laporan. Silakan coba lagi nanti.");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Kirim Laporan";
       }
+    }
   };
 }
 
@@ -381,58 +384,58 @@ function initializeFileUpload() {
   if (!uploadArea || !fileInput || !previewContainer) return;
 
   function previewImage(file) {
-      if (!file) return;
+    if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-          const img = new Image();
-          img.onload = function() {
-              // Hitung rasio aspek untuk memastikan gambar sesuai container
-              const containerWidth = previewContainer.offsetWidth;
-              const containerHeight = previewContainer.offsetHeight;
-              const imgRatio = this.width / this.height;
-              const containerRatio = containerWidth / containerHeight;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        // Hitung rasio aspek untuk memastikan gambar sesuai container
+        const containerWidth = previewContainer.offsetWidth;
+        const containerHeight = previewContainer.offsetHeight;
+        const imgRatio = this.width / this.height;
+        const containerRatio = containerWidth / containerHeight;
 
-              let finalWidth, finalHeight;
+        let finalWidth, finalHeight;
 
-              if (imgRatio > containerRatio) {
-                  // Gambar lebih lebar
-                  finalWidth = containerWidth;
-                  finalHeight = containerWidth / imgRatio;
-              } else {
-                  // Gambar lebih tinggi
-                  finalHeight = containerHeight;
-                  finalWidth = containerHeight * imgRatio;
-              }
+        if (imgRatio > containerRatio) {
+          // Gambar lebih lebar
+          finalWidth = containerWidth;
+          finalHeight = containerWidth / imgRatio;
+        } else {
+          // Gambar lebih tinggi
+          finalHeight = containerHeight;
+          finalWidth = containerHeight * imgRatio;
+        }
 
-              previewContainer.innerHTML = `
-                  <div class="image-preview">
-                      <img
-                          src="${e.target.result}"
-                          alt="Preview"
-                          class="uploaded-image"
-                          style="width: ${finalWidth}px; height: ${finalHeight}px;"
-                      >
-                      <button type="button" class="remove-image" onclick="removeImage()">
-                          <i class="fas fa-times"></i>
-                      </button>
-                  </div>
-              `;
-          };
-          img.src = e.target.result;
+        previewContainer.innerHTML = `
+          <div class="image-preview">
+            <img
+              src="${e.target.result}"
+              alt="Preview"
+              class="uploaded-image"
+              style="width: ${finalWidth}px; height: ${finalHeight}px;"
+            >
+            <button type="button" class="remove-image" onclick="removeImage()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
       };
-      reader.readAsDataURL(file);
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   // Fungsi untuk menghapus gambar
   window.removeImage = function() {
-      previewContainer.innerHTML = `
-          <div class="preview-content">
-              <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
-              <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
-          </div>
-      `;
-      fileInput.value = '';
+    previewContainer.innerHTML = `
+      <div class="preview-content">
+        <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
+        <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
+      </div>
+    `;
+    fileInput.value = '';
   };
 
   // Validasi file
@@ -478,6 +481,18 @@ function initializeFileUpload() {
       }
   });
 }
+
+// Ensure all functions are initialized when the DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof feather !== "undefined") {
+    feather.replace();
+  }
+
+  initializeModal();
+  initializeFileUpload();
+  initializeRealTimeData();
+  initializeForm();
+});
 
 // Expose necessary functions globally
 window.showEventDetails = showEventDetails;

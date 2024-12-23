@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Handle file upload
     if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = "../uploads/";
+        $uploadDir = "../{$kategori}_reports_img/";
 
         // Buat direktori jika belum ada
         if (!file_exists($uploadDir)) {
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if (move_uploaded_file($_FILES['image_file']['tmp_name'], $targetPath)) {
-            $photo = 'uploads/' . $fileName;
+            $photo = $fileName; // Simpan hanya nama file, bukan full path
         } else {
             echo json_encode(['success' => false, 'message' => 'Gagal mengupload file']);
             exit;

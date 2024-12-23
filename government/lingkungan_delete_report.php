@@ -2,7 +2,7 @@
 include '../login_adgov/check_session.php';
 include '../php/config.php';
 
-if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'perhubungan') {
+if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'lingkungan') {
     header('Location: ../login_adgov/login_adgov.php');
     exit();
 }
@@ -23,6 +23,6 @@ if (isset($_GET['id'])) {
     $_SESSION['message'] = "Error: ID laporan tidak ditemukan";
 }
 
-header("Location: perhubungan_read_reports.php");
+header("Location: lingkungan_read_reports.php");
 exit();
 ?>

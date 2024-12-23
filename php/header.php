@@ -138,9 +138,14 @@
         z-index: 1000;
     }
 
-    .user-profile:hover .user-dropdown {
+    .user-dropdown.show {
         display: block;
     }
+
+    /* Remove this rule */
+    /*.user-profile:hover .user-dropdown {
+        display: block;
+    }*/
 
     .logout-button {
         display: flex;
@@ -263,7 +268,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle">Layanan</a>
                 <ul class="dropdown-menu">
-                    <li><a href="../traffic/traffic.php" class="dropdown-item" class="nav-item active">Layanan Traffic</a></li>
+                    <li><a href="../traffic/traffic.php" class="dropdown-item" class="nav-item active">Layanan Transportasi</a></li>
                     <li><a href="../sampah/sampah.php" class="dropdown-item" class="nav-item active">Jadwal Sampah</a></li>
                     <li><a href="../cuaca/cuaca.php" class="dropdown-item" class="nav-item active">Weather</a></li>
                 </ul>
@@ -273,7 +278,7 @@
         </ul>
     </nav>
 
-    <div class="user-profile">
+    <div class="user-profile" id="userProfile">
         <!-- Menampilkan Nama Lengkap -->
         <span class="username">
             <?php
@@ -301,8 +306,8 @@
         </div>
 
         <!-- Dropdown Menu untuk Logout -->
-        <div class="user-dropdown">
-            <form action="../logout.php" method="POST">
+        <div class="user-dropdown" id="userDropdown">
+            <form action="../dashboard/logout.php" method="POST">
                 <button type="submit" class="logout-button">
                     <i class="fas fa-sign-out-alt"></i>
                     Logout
@@ -311,3 +316,21 @@
         </div>
     </div>
 </header>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userProfile = document.getElementById('userProfile');
+    const userDropdown = document.getElementById('userDropdown');
+
+    userProfile.addEventListener('click', function(e) {
+        e.stopPropagation();
+        userDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!userProfile.contains(e.target)) {
+            userDropdown.classList.remove('show');
+        }
+    });
+});
+</script>
+

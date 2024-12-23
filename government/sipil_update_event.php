@@ -31,8 +31,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = mysqli_real_escape_string($conn, $_POST['description']);
     $event_date = mysqli_real_escape_string($conn, $_POST['event_date']);
     $event_time = mysqli_real_escape_string($conn, $_POST['event_time']);
-    $image_url = mysqli_real_escape_string($conn, $_POST['image_url']);
 
+    // Handle image upload
+    $image_url = $row['image_url']; // Default to existing image URL
+
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK) {
+        $upload_dir = "../img_events_update/";
+
+        // Create directory if it doesn't exist
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        // Generate unique filename
+        $file_extension = pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION);
+        $new_filename = uniqid() . '_' . time() . '.' . $file_extension;
+        $upload_path = $upload_dir . $new_filename;
+
+        // Validate file type
+        $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        if (!in_array($_FILES['image_file']['type'], $allowed_types)) {
+            $_SESSION['error'] = "Format file tidak valid. Hanya JPG, JPEG, PNG, dan GIF yang diizinkan.";
+            header("Location: sipil_update_event.php?id=" . $id);
+            exit();
+        }
+
+        // Validate file size (5MB max)
+        if ($_FILES['image_file']['size'] > 5 * 1024 * 1024) {
+            $_SESSION['error'] = "Ukuran file terlalu besar (maksimal 5MB)";
+            header("Location: sipil_update_event.php?id=" . $id);
+            exit();
+        }
+
+        // Move uploaded file
+        if (move_uploaded_file($_FILES['image_file']['tmp_name'], $upload_path)) {
+            // Store the new path in database
+            $image_url = $upload_path;
+        } else {
+            $_SESSION['error'] = "Gagal mengunggah file";
+            header("Location: sipil_update_event.php?id=" . $id);
+            exit();
+        }
+    }
+
+    // Update database
     $sql = "UPDATE events SET title=?, description=?, image_url=?, event_date=?, event_time=? WHERE id=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssi", $title, $description, $image_url, $event_date, $event_time, $id);
@@ -42,10 +84,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: sipil_read_events.php");
         exit();
     } else {
-        $error = "Error: " . $stmt->error;
+        $_SESSION['error'] = "Error: " . $stmt->error;
+        header("Location: sipil_update_event.php?id=" . $id);
+        exit();
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,13 +113,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </a>
                 </div>
 
-                <?php if (isset($error)): ?>
+                <?php if (isset($_SESSION['error'])): ?>
                     <div class="message error">
-                        <?php echo $error; ?>
+                        <?php
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                        ?>
                     </div>
                 <?php endif; ?>
 
-                <form action="" method="post" class="form">
+                <form action="" method="post" enctype="multipart/form-data" class="form">
                     <div class="form-group">
                         <label for="title">
                             <i class="fas fa-heading"></i> Judul Event
@@ -127,16 +175,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class="form-group">
-                        <label for="image_url">
-                            <i class="fas fa-image"></i> URL Gambar
+                        <label for="image_file">
+                            <i class="fas fa-image"></i> Unggah Gambar
                         </label>
-                        <input type="url"
-                               id="image_url"
-                               name="image_url"
-                               value="<?php echo htmlspecialchars($row['image_url']); ?>"
-                               required
-                               class="form-control"
-                               placeholder="Masukkan URL gambar">
+                        <div class="upload-container">
+                            <div id="uploadArea" class="upload-area">
+                                <input type="file"
+                                       id="image_file"
+                                       name="image_file"
+                                       accept="image/png, image/jpeg, image/jpg, image/gif"
+                                       style="display: none;">
+                                <div id="preview-container" class="preview-container">
+                                    <?php if ($row['image_url']): ?>
+                                        <div class="image-preview">
+                                            <img src="<?php echo htmlspecialchars($row['image_url']); ?>"
+                                                 alt="Current Event Image"
+                                                 class="uploaded-image">
+                                            <button type="button" class="remove-image" onclick="removeImage()">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="preview-content">
+                                            <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
+                                            <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-buttons">
@@ -151,5 +218,106 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('image_file');
+            const previewContainer = document.getElementById('preview-container');
+
+            function previewImage(file) {
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const containerWidth = previewContainer.offsetWidth;
+                        const containerHeight = previewContainer.offsetHeight;
+                        const imgRatio = this.width / this.height;
+                        const containerRatio = containerWidth / containerHeight;
+
+                        let finalWidth, finalHeight;
+
+                        if (imgRatio > containerRatio) {
+                            finalWidth = containerWidth;
+                            finalHeight = containerWidth / imgRatio;
+                        } else {
+                            finalHeight = containerHeight;
+                            finalWidth = containerHeight * imgRatio;
+                        }
+
+                        previewContainer.innerHTML = `
+                            <div class="image-preview">
+                                <img
+                                    src="${e.target.result}"
+                                    alt="Preview"
+                                    class="uploaded-image"
+                                    style="width: ${finalWidth}px; height: ${finalHeight}px;"
+                                >
+                                <button type="button" class="remove-image" onclick="removeImage()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            window.removeImage = function() {
+                previewContainer.innerHTML = `
+                    <div class="preview-content">
+                        <p class="placeholder-text">Drag and drop photo here or <span class="choose-photo">choose photo</span></p>
+                        <p class="file-info">Format yang didukung: JPG, PNG, GIF (Ukuran maks: 5 MB)</p>
+                    </div>
+                `;
+                fileInput.value = '';
+            };
+
+            function validateFile(file) {
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Format file tidak valid. Hanya JPG, JPEG, PNG, dan GIF yang diizinkan.');
+                    return false;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Ukuran file melebihi 5 MB. Silakan pilih file yang lebih kecil.');
+                    return false;
+                }
+                return true;
+            }
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('drag-over');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                const file = e.dataTransfer.files[0];
+                if (file && validateFile(file)) {
+                    fileInput.files = e.dataTransfer.files;
+                    previewImage(file);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file && validateFile(file)) {
+                    previewImage(file);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
