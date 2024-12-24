@@ -38,7 +38,7 @@ $email = $_SESSION['email'];
             <header class="header">
                 <h1><i class="fas fa-tachometer-alt"></i> Dashboard Sipil</h1>
                 <div class="user-info">
-                    <span><?php echo $email; ?></span>
+                    <!-- <span><?php echo $email; ?></span> -->
                     <a href="../Login_adgov/logout_adgov.php" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>

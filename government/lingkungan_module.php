@@ -1,12 +1,13 @@
 <?php
-include '../login_adgov/check_session.php';
+// include '../login_adgov/check_session.php';
+session_start();
 include '../php/config.php';
 include 'lingkungan_sidebar.php';
 
 // Cek apakah user sudah login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login_adgov/login_adgov.php");
-    exit();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'lingkungan') {
+  header("Location: ../login_adgov/login_adgov.php");
+  exit();
 }
 
 // Ambil email user
@@ -44,8 +45,8 @@ $total_laporan = $row_laporan['total'];
             <div class="header">
                 <h1><i class="fas fa-tachometer-alt"></i> Dashboard Lingkungan</h1>
                 <div class="user-info">
-                    <span><?php echo $email; ?></span>
-                    <a href="../logout.php" class="logout-btn">
+                    <!-- <span><?php echo $email; ?></span> -->
+                    <a href="../login_adgov/logout_adgov.php" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i>
                         Logout
                     </a>

@@ -6,14 +6,14 @@ require_once '../php/config.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
-    header('Location: ../login/login.html');
+    header('Location: ../login/login.php');
     exit();
 }
 
 // Get user data
 $userData = getUserData($_SESSION['user_id']);
 if (!$userData) {
-    header('Location: ../login/login.html');
+    header('Location: ../login/login.php');
     exit();
 }
 

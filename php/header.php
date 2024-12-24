@@ -273,8 +273,8 @@
                     <li><a href="../cuaca/cuaca.php" class="dropdown-item" class="nav-item active">Weather</a></li>
                 </ul>
             </li>
-            <li><a href="/tentang" class="nav-item">Tentang</a></li>
-            <li><a href="/kontak" class="nav-item">Kontak</a></li>
+            <li><a href="https://expo.sijar.live/en/karya/909" class="nav-item">Tentang</a></li>
+            <li><a href="#footer" class="nav-item">Kontak</a></li>
         </ul>
     </nav>
 

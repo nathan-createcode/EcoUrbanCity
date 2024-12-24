@@ -147,7 +147,7 @@
 <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<footer class="footer">
+<footer class="footer" id="footer">
     <div class="footer-grid">
         <div>
             <h3 class="footer-title">Tentang EcoUrbanCity</h3>

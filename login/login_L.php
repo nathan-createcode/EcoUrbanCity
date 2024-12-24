@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log("Email tidak ditemukan: $email");
     }
     // Jika login gagal
-    echo "error";
+    echo "email atau password salah";
     exit();
 } else {
     // Jika bukan metode POST, arahkan ke halaman login

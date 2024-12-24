@@ -26,7 +26,7 @@ window.onload = function() {
 
   // Cek jika pengguna sudah login dan arahkan ke dashboard
   if (sessionStorage.getItem('loggedIn') === 'true') {
-      window.location.href = 'login_adgov.html'; // Atur ke halaman dashboard yang sesuai
+      window.location.href = 'login_adgov.php'; // Atur ke halaman dashboard yang sesuai
   }
 };
 
