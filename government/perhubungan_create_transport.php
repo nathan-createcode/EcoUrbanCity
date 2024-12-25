@@ -17,19 +17,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $harga = mysqli_real_escape_string($conn, $_POST['harga']);
     $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
 
-    $sql = "INSERT INTO transportasi (jenis, asal, tujuan, berangkat, durasi, harga, tanggal)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiis", $jenis, $asal, $tujuan, $berangkat, $durasi, $harga, $tanggal);
+    $tanggal_konversi = date('Y-m-d', strtotime($tanggal));
+    $tanggal_hari_ini = date('Y-m-d');
 
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "Data transportasi berhasil ditambahkan!";
-        header("Location: perhubungan_read_transport.php");
-        exit();
+    if ($tanggal_konversi < $tanggal_hari_ini) {
+        $error = "Tanggal tidak valid. Harap pilih hari ini atau hari yang akan datang.";
     } else {
-        $error = "Error: " . $stmt->error;
+        $sql = "INSERT INTO transportasi (jenis, asal, tujuan, berangkat, durasi, harga, tanggal)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssiis", $jenis, $asal, $tujuan, $berangkat, $durasi, $harga, $tanggal);
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Data transportasi berhasil ditambahkan!";
+            header("Location: perhubungan_read_transport.php");
+            exit();
+        } else {
+            $error = "Error: " . $stmt->error;
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 ?>
 
@@ -64,7 +71,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form action="" method="post" class="form">
                     <div class="form-group">
                         <label for="jenis"><i class="fas fa-bus"></i> Jenis Transportasi</label>
-                        <input type="text" id="jenis" name="jenis" required class="form-control">
+                        <select id="jenis" name="jenis" required class="form-control">
+                            <option value="Bus">Bus</option>
+                            <option value="LRT">LRT</option>
+                            <option value="MRT">MRT</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
