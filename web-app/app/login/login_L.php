@@ -1,6 +1,14 @@
 <?php
 session_start();
-require_once '../php/config.php'; // File koneksi database
+require_once '../php/config.php'; // Pastikan ini mengarah ke file config.php yang benar
+
+// Membuat koneksi ke MySQL
+$conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+// Mengecek apakah koneksi berhasil
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ambil data dari input form

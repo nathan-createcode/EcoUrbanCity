@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 
 // Koneksi ke database
-$conn = new mysqli("localhost", "root", "", "ecourbancity");
+$conn = new mysqli("db", "root", "root_password", "ecourbancity");
 if ($conn->connect_error) {
     http_response_code(500);
     echo json_encode(['status' => 'error', 'message' => 'Koneksi ke database gagal: ' . $conn->connect_error]);

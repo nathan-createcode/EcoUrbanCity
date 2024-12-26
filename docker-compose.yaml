@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password # Password root untuk MySQL
+      MYSQL_DATABASE: ecourbancity # Nama database yang digunakan
+      MYSQL_USER: user # Nama user MySQL
+      MYSQL_PASSWORD: user_password # Password untuk user MySQL
+    networks:
+      - mynetwork
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./database/sql:/docker-entrypoint-initdb.d"
+
+  web:
+    build: ./web-app/app
+    ports:
+      - "80:80"
+    networks:
+      - mynetwork
+    depends_on:
+      - db
+
+networks:
+  mynetwork:
+    driver: bridge
