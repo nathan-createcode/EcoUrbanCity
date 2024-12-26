@@ -27,7 +27,7 @@ $sidebar = '
             <i class="fas fa-file-alt"></i>
             Laporan Infrastruktur
         </a>
-        <a href="../Login_adgov/logout_adgov.php" class="nav-link">
+        <a href="../login_adgov/logout_adgov.php" class="nav-link">
             <i class="fas fa-sign-out-alt"></i>
             Logout
         </a>

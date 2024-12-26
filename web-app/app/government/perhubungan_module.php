@@ -36,7 +36,7 @@ $total_reports = mysqli_fetch_assoc($query_reports)['total'];
                 <h1><i class="fas fa-tachometer-alt"></i> Dashboard Perhubungan</h1>
                 <div class="user-info">
                     <!-- <span><?php echo $_SESSION['email']; ?></span> -->
-                    <a href="../Login_adgov/logout_adgov.php" class="logout-btn">
+                    <a href="../login_adgov/logout_adgov.php" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 </div>

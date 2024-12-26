@@ -27,7 +27,7 @@ include 'sidebar.php';
             $admin = mysqli_fetch_assoc($query);
             ?>
             <span><?php echo $admin['email']; ?></span>
-            <a href="../Login_adgov/logout_adgov.php" class="logout-btn">
+            <a href="../login_adgov/logout_adgov.php" class="logout-btn">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

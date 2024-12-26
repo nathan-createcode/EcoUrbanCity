@@ -3,7 +3,7 @@ include '../login_adgov/check_session.php';
 
 // Periksa apakah user sudah login
 if (!isset($_SESSION['email']) || !isset($_SESSION['role'])) {
-    header('Location: ../Login_adgov/login_adgov.php'); // Redirect ke halaman login
+    header('Location: ../login_adgov/login_adgov.php'); // Redirect ke halaman login
     exit();
 }
 
