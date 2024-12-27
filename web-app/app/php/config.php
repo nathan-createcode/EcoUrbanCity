@@ -2,7 +2,7 @@
 // config.php
 $db_host = 'db'; // Gunakan nama service yang sesuai di Docker Compose
 $db_user = 'root'; // Username MySQL
-$db_password = 'root_password'; // Password root untuk MySQL
+$db_password = 't3'; // Password root untuk MySQL
 $db_name = 'ecourbancity'; // Nama database yang digunakan
 
 // Membuat koneksi ke MySQL

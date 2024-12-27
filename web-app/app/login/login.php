@@ -6,6 +6,31 @@
     <title>Login - EcoUrbanCity</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="login.css">
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error')) {
+                let errorMessage;
+                switch (urlParams.get('error')) {
+                    case 'empty_fields':
+                        errorMessage = "Email atau password tidak boleh kosong!";
+                        break;
+                    case 'wrong_password':
+                        errorMessage = "Password salah!";
+                        break;
+                    case 'email_not_found':
+                        errorMessage = "Email tidak terdaftar!";
+                        break;
+                    case 'query_failed':
+                        errorMessage = "Terjadi kesalahan pada server. Silakan coba lagi.";
+                        break;
+                    default:
+                        errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+                }
+                alert(errorMessage); // Show default alert
+            }
+        };
+    </script>
 </head>
 <body>
     <div class="container">
@@ -52,6 +77,5 @@
             </div>
         </div>
     </div>
-    <!-- <script src="login.js"></script> -->
 </body>
 </html>

@@ -3,10 +3,10 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root_password # Password root untuk MySQL
+      MYSQL_ROOT_PASSWORD: t3 # Password root untuk MySQL
       MYSQL_DATABASE: ecourbancity # Nama database yang digunakan
       MYSQL_USER: user # Nama user MySQL
-      MYSQL_PASSWORD: user_password # Password untuk user MySQL
+      MYSQL_PASSWORD: t3 # Password untuk user MySQL
     networks:
       - mynetwork
     ports:

@@ -2,10 +2,10 @@
 FROM mysql:latest
 
 # Menentukan environment variables untuk MySQL
-ENV MYSQL_ROOT_PASSWORD=rootpassword
+ENV MYSQL_ROOT_PASSWORD=t3
 ENV MYSQL_DATABASE=ecourbancity
 ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=userpassword
+ENV MYSQL_PASSWORD=t3
 
 # Menyalin file SQL untuk menginisialisasi database (opsional)
 COPY ./sql/ecourbancity.sql /docker-entrypoint-initdb.d/
