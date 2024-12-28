@@ -1,3 +1,9 @@
+<?php
+session_start();
+$error_message = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : '';
+unset($_SESSION['error_message']); // Hapus pesan setelah ditampilkan
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,6 +15,7 @@
     <title>Smart City Portal Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="login_adgov.css">
+    
 </head>
 <body>
     <div class="container">
@@ -31,5 +38,11 @@
     </div>
 
     <script src="login_adgov.js"></script>
+    <script>
+        // Tampilkan alert jika ada pesan kesalahan
+        <?php if ($error_message): ?>
+            alert("<?= htmlspecialchars($error_message) ?>");
+        <?php endif; ?>
+    </script>
 </body>
 </html>
