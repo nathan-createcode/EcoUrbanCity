@@ -1,28 +1,32 @@
-version: "3.7"
-services:
-  db:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: t3 # Password root untuk MySQL
-      MYSQL_DATABASE: ecourbancity # Nama database yang digunakan
-      MYSQL_USER: user # Nama user MySQL
-      MYSQL_PASSWORD: t3 # Password untuk user MySQL
-    networks:
-      - mynetwork
-    ports:
-      - "3306:3306"
-    volumes:
-      - "./database/sql:/docker-entrypoint-initdb.d"
+version: "3.8"
 
+services:
   web:
-    build: ./web-app/app
+    build: ./web-app
+    container_name: web
+    volumes:
+      - ./web-app/app:/var/www/html
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
-      - mynetwork
-    depends_on:
-      - db
+      my_network:
+        ipv4_address: 172.18.0.10
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: t3
+      MYSQL_DATABASE: ecourbancity
+    volumes:
+      - ./database/sql:/docker-entrypoint-initdb.d
+    networks:
+      my_network:
+        ipv4_address: 172.18.0.11
 
 networks:
-  mynetwork:
-    driver: bridge
+  my_network:
+    external: true
+
+volumes:
+  db_data:

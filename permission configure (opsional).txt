@@ -1,0 +1,19 @@
+docker exec -it web bash
+
+cd /etc/apache2/sites-available/
+
+nano 000-default.conf
+
+apt-get update
+
+apt-get install nano
+
+nano 000-default.conf
+
+<Directory /var/www/html>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+docker-compose restart web
