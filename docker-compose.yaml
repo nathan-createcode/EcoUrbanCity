@@ -1,32 +1,38 @@
-version: "3.8"
-
 services:
-  web:
-    build: ./web-app
-    container_name: web
-    volumes:
-      - ./web-app/app:/var/www/html
-    ports:
-      - "8080:80"
-    networks:
-      my_network:
-        ipv4_address: 172.18.0.10
-
   db:
-    image: mysql:5.7
-    container_name: db
+    image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: t3
-      MYSQL_DATABASE: ecourbancity
-    volumes:
-      - ./database/sql:/docker-entrypoint-initdb.d
+      MYSQL_ROOT_PASSWORD: t3 # Password root untuk MySQL
+      MYSQL_DATABASE: ecourbancity # Nama database yang digunakan
+      MYSQL_USER: user # Nama user MySQL
+      MYSQL_PASSWORD: t3 # Password untuk user MySQL
     networks:
-      my_network:
-        ipv4_address: 172.18.0.11
+      - mynetwork
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./database/sql:/docker-entrypoint-initdb.d"
+
+  web:
+    build: ./web-app/
+    ports:
+      - "80:80" # Port aplikasi tetap pada port 80
+    networks:
+      - mynetwork
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80" # phpMyAdmin dipindahkan ke port 8080
+    environment:
+      PMA_HOST: db
+      PMA_USER: user
+      PMA_PASSWORD: t3
+    networks:
+      - mynetwork
 
 networks:
-  my_network:
-    external: true
-
-volumes:
-  db_data:
+  mynetwork:
+    driver: bridge

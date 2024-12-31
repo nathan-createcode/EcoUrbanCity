@@ -1,11 +1,8 @@
 # Dockerfile
-FROM php:apache
+FROM php:7.4-apache
 
-# Install ekstensi mysqli
+# Copy application files
+COPY ./app /var/www/html/
+
+# Install any necessary dependencies
 RUN docker-php-ext-install mysqli
-
-# Salin file aplikasi Anda ke dalam kontainer
-COPY app/ /var/www/html/
-
-# Set izin untuk direktori
-RUN chown -R www-data:www-data /var/www/html
