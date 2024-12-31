@@ -2,10 +2,10 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: t3 # Password root untuk MySQL
-      MYSQL_DATABASE: ecourbancity # Nama database yang digunakan
-      MYSQL_USER: user # Nama user MySQL
-      MYSQL_PASSWORD: t3 # Password untuk user MySQL
+      MYSQL_ROOT_PASSWORD: t3
+      MYSQL_DATABASE: ecourbancity
+      MYSQL_USER: user
+      MYSQL_PASSWORD: t3
     networks:
       - mynetwork
     ports:
@@ -16,7 +16,7 @@ services:
   web:
     build: ./web-app/
     ports:
-      - "80:80" # Port aplikasi tetap pada port 80
+      - "80:80"
     networks:
       - mynetwork
     depends_on:
@@ -25,7 +25,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8080:80" # phpMyAdmin dipindahkan ke port 8080
+      - "8080:80"
     environment:
       PMA_HOST: db
       PMA_USER: user
