@@ -7,7 +7,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: t3
     networks:
-      - mynetwork
+      - t3net
     ports:
       - "3306:3306"
     volumes:
@@ -18,7 +18,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - mynetwork
+      - t3net
     depends_on:
       - db
 
@@ -31,8 +31,8 @@ services:
       PMA_USER: user
       PMA_PASSWORD: t3
     networks:
-      - mynetwork
+      - t3net
 
 networks:
-  mynetwork:
+  t3net:
     driver: bridge
