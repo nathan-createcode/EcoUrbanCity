@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     extra_hosts:
-      - "euc.t3:127.0.0.1"
+      - "t3.euc:127.0.0.1"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -35,7 +35,7 @@ services:
     networks:
       - t3net
     extra_hosts:
-      - "euc.t3:127.0.0.1"
+      - "t3.euc:127.0.0.1"
 
 networks:
   t3net:
