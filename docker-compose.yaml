@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: mysql:latest
@@ -21,6 +23,8 @@ services:
       - t3net
     depends_on:
       - db
+    extra_hosts:
+      - "euc.t3:127.0.0.1"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -32,6 +36,8 @@ services:
       PMA_PASSWORD: t3
     networks:
       - t3net
+    extra_hosts:
+      - "euc.t3:127.0.0.1"
 
 networks:
   t3net:
