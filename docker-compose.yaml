@@ -37,20 +37,6 @@ services:
     extra_hosts:
       - "t3.euc:127.0.0.1"
 
-  dns:
-    image: ubuntu/bind9
-    ports:
-      - "53:53/udp"
-      - "53:53/tcp"
-    networks:
-      - t3net
-    volumes:
-      - "./dns/config:/etc/bind"
-      - "./dns/cache:/var/cache/bind"
-      - "./dns/records:/var/lib/bind"
-    environment:
-      - TZ=UTC
-
 networks:
   t3net:
-    driver: bridge
+    external: true
