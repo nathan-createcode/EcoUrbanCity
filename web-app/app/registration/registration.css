@@ -1,0 +1,423 @@
+/* Reset dan Variabel */
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #ff4b6e;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --error-color: #dc2626;
+    --success-color: #16a34a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* .error-message {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+} */
+
+/* Container Layout */
+.container {
+    display: flex;
+    height: 100vh; /* Changed from min-height to fixed height */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Left Section Styling */
+.left-section {
+    flex: 1;
+    height: 100%; /* Changed from min-height to match parent */
+    background-image: url('../background_img/reg-flat-geometric-abstact-background_23-2149447626.png'); /* Sesuaikan dengan jalur folder */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem; /* Reduced padding */
+}
+
+.welcome-text {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    max-width: 80%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* .left-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-color);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+} */
+
+/* Right Section Styling */
+.right-section {
+    flex: 1;
+    height: 100%;
+    padding: 1.5rem; /* Reduced padding */
+    overflow-y: auto; /* Allow scrolling only in form section if needed */
+}
+
+.form-container {
+    width: 100%;
+    max-width: 450px; /* Reduced from 500px */
+    margin: 0 auto;
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    text-align: center;
+    z-index: 2;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #6366f1;
+    color: #6366f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.step.active .step-number {
+    background-color: #6366f1;
+    color: white;
+}
+
+.step-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+    transition: color 0.3s ease;
+}
+
+.step.active .step-text {
+    color: #6366f1;
+    font-weight: 600;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .progress-steps {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .step-number {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.875rem;
+    }
+
+    .step-text {
+        font-size: 0.75rem;
+        max-width: 100px;
+        display: block !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-steps {
+        gap: 0.75rem;
+        padding: 0.75rem;
+    }
+
+    .step-number {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.75rem;
+    }
+
+    .step-text {
+        font-size: 0.675rem;
+        max-width: 80px;
+        display: block !important;
+    }
+}
+
+/* Form Styling */
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
+}
+
+/* Gaya untuk pesan error */
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Gaya untuk input saat terjadi error */
+input.error {
+    border: 1px solid red;
+}
+
+select {
+    width: 100%;
+    padding: 0.625rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236b7280' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+    background-size: 1em;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.required {
+    color: var(--error-color);
+    margin-left: 0.25rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.625rem; /* Reduced from 0.75rem */
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+/* Navigation Buttons */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+button {
+    padding: 1rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.btn-prev {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: var(--text-color);
+}
+
+.btn-next, .btn-submit {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+}
+
+.btn-prev:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-next:hover, .btn-submit:hover {
+    background-color: #4f46e5;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        height: 100vh;
+        padding: 0; /* Remove container padding */
+    }
+
+    .left-section {
+        flex: 0.7; /* Reduce left section width on smaller screens */
+    }
+
+    .left-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .form-container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        display: flex; /* Show on mobile but smaller */
+        height: 200px;
+    }
+
+    .right-section {
+        padding: 1rem;
+    }
+
+    .progress-steps {
+        margin-bottom: 1.5rem;
+    }
+
+    .step-text {
+        display: none;
+    }
+
+    .form-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-step {
+        padding: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    input, select {
+        font-size: 0.875rem;
+    }
+
+    .btn-prev, .btn-next, .btn-submit {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Add these styles to both login.css and registration.css */
+
+.account-link {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.account-link p {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.account-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.account-link a:hover {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+/* Page Transition Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-out;
+}

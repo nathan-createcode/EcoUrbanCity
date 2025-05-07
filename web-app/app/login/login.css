@@ -1,0 +1,245 @@
+:root {
+    --primary-color: #6366f1;
+    --text-color: #333333;
+    --border-color: #e5e7eb;
+    --placeholder-color: #9ca3af;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Left Section */
+.left-section {
+    flex: 1;
+    background-image: url('../background_img/log-flat-geometric-abstact-background_23-2149447624.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.welcome-text {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    max-width: 80%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Section Styling */
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #ffffff;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.form-header {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.form-header h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* Adjusted left padding for icon */
+    border: 1.5px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+}
+
+.form-group i {
+    position: absolute;
+    left: 0.75rem; /* Adjusted left position */
+    top: 70%; /* Center vertically */
+    transform: translateY(-50%); /* Perfect vertical centering */
+    color: #6b7280; /* Adjusted color to match design */
+    font-size: 1rem;
+    pointer-events: none; /* Ensures icon doesn't interfere with input */
+}
+
+.form-group label + input + i {
+    top: calc(50% + 12px); /* Adjust based on label height */
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.account-link {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.account-link p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.account-link a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.account-link a:hover {
+    text-decoration: underline;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #4f46e5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .container {
+        height: 100vh;
+        padding: 0;
+    }
+
+    .left-section {
+        flex: 0.7;
+    }
+
+    .welcome-text {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        height: 200px;
+    }
+
+    .right-section {
+        padding: 1.5rem;
+    }
+
+    .login-card {
+        max-width: 100%;
+        padding: 2rem;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-section {
+        height: 150px;
+    }
+
+    .welcome-text {
+        font-size: 2rem;
+    }
+
+    .login-card {
+        padding: 1.5rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-header p {
+        font-size: 0.875rem;
+    }
+
+    .form-group input {
+        padding-left: 2.25rem; /* Slightly reduced padding on mobile */
+    }
+
+    .form-group i {
+        left: 0.65rem; /* Slightly adjusted position on mobile */
+        font-size: 0.9rem; /* Slightly smaller icons on mobile */
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+

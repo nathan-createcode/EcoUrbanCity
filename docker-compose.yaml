@@ -1,0 +1,42 @@
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: t3
+      MYSQL_DATABASE: ecourbancity
+      MYSQL_USER: user
+      MYSQL_PASSWORD: t3
+    networks:
+      - t3net
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./database/sql:/docker-entrypoint-initdb.d"
+
+  web:
+    build: ./web-app/
+    ports:
+      - "80:80"
+    networks:
+      - t3net
+    depends_on:
+      - db
+    extra_hosts:
+      - "t3.euc:127.0.0.1"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: user
+      PMA_PASSWORD: t3
+    networks:
+      - t3net
+    extra_hosts:
+      - "t3.euc:127.0.0.1"
+
+networks:
+  t3net:
+    external: true
